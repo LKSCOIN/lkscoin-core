@@ -1,8 +1,8 @@
-// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2014-2020 The Lksc Core developers
 
 #include <cachemap.h>
 
-#include <test/test_dash.h>
+#include <test/test_lks.h>
 
 #include <boost/test/unit_test.hpp>
 

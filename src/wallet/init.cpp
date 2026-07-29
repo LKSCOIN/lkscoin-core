@@ -52,7 +52,7 @@ public:
     //! Close all wallets.
     void Close() const override;
 
-    // Dash Specific Wallet Init
+    // Lks Specific Wallet Init
     void AutoLockMasternodeCollaterals() const override;
     void InitCoinJoinSettings() const override;
     void InitKeePass() const override;
