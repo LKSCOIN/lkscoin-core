@@ -353,7 +353,7 @@ public:
         consensus.DIP0003Height = 307200; 
         consensus.DIP0003EnforcementHeight = 307200; 
         consensus.DIP0003EnforcementHash = uint256S("00000000000006104d2de5f4076b6be6fa2f6204186ae554c5cafac2c46f72e4"); 
-        consensus.DIP0008Height = 0; // TODO(CONSENSUS): set to the actual DIP0008 BIP9 activation height on LKS mainnet (query `getblockchaininfo` on a 3.3.0.0 node) BEFORE any release. Phase-2 full-sync test will fail if wrong.
+        consensus.DIP0008Height = 329600; // DIP0008 BIP9 activation height on LKS mainnet (bip9_softforks.dip0008.since, read from a synced 3.3.0.0 production node at height 993303, 2026-07-30)
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
         consensus.nPowTargetTimespan = 24 * 60 * 60; // Lks: 1 day
         consensus.nPowTargetSpacing = 2.5 * 60; // Lks: 2.5 minutes

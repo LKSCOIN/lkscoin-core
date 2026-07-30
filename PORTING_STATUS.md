@@ -20,10 +20,12 @@
 
 ## Open TODOs — must be resolved before ANY release
 
-1. **`consensus.DIP0008Height` mainnet = 0 (placeholder).** Set to the real DIP0008
-   BIP9 activation height: run on a 3.3.0.0 node:
-   `lks-cli getblockchaininfo` → `bip9_softforks.dip0008.since`.
-   Wrong value = consensus fork at that height. The Phase-2 full-sync test will catch it, but set it properly first. (Same for testnet.)
+1. ~~**`consensus.DIP0008Height` mainnet placeholder.**~~ **RESOLVED:** set to
+   329600, read from `bip9_softforks.dip0008.since` on a synced 3.3.0.0
+   production node (chain height 993303, 2026-07-30). Reference activation
+   heights from the same node: bip147=276000, dip0001=307200, dip0003=307200,
+   dip0008=329600, csv=334656. Testnet DIP0008Height is still a placeholder
+   (testnet to be re-bootstrapped anyway).
 2. **DIP0020 activation window (mainnet) is a placeholder** (Oct 2026 → Oct 2027, 80%/800). Community decision needed; it's a hard-fork deployment (new opcodes).
 3. **`chainparamsseeds.h` contains DASH mainnet IPs on port 9999** (inherited bug from 3.3.0.0 — the fixed seeds were never regenerated!). Regenerate from real LKS nodes with `contrib/seeds/generate-seeds.py`.
 4. **Non-consensus delta not yet ported** (~25 files): GUI (`qt/overviewpage.cpp` 116 lines, `bitcoingui`, `optionsdialog`, `bitcoinunits`), RPC output tweaks (`rpc/misc|blockchain|net|mining|rpcevo`, `wallet/rpcwallet`), wallet defaults, LKS test-value adjustments in ~7 upstream test files. Old repo remains the reference for these.
