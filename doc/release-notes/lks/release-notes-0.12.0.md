@@ -8,7 +8,7 @@ Lksc Core version 0.12.0 is now available from:
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/LKSCOIN/LKSCOIN/issues
+  https://github.com/LKSCOIN/lkscoin-core/issues
 
 
 How to Upgrade

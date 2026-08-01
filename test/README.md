@@ -25,7 +25,7 @@ Build for your system first. Be sure to enable wallet, utils and daemon when you
 
 Many Lks specific tests require lks_hash. To install it:
 
-- Clone the repo `git clone https://github.com/LKSCOIN/LKSCOIN_hash`
+- Clone the repo `git clone https://github.com/LKSCOIN/lkscoin-core_hash`
 - Install lks_hash `cd lks_hash && python3 setup.py install`
 
 The ZMQ functional test requires a python ZMQ library. To install it:

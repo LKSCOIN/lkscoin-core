@@ -12,7 +12,7 @@ This release is mandatory for all nodes.
 
 Please report bugs using the issue tracker at github:
 
-  <https://github.com/LKSCOIN/LKSCOIN/issues>
+  <https://github.com/LKSCOIN/lkscoin-core/issues>
 
 
 Upgrading and downgrading
@@ -143,7 +143,7 @@ be disabled.
 
 Statoshi backport
 ------------------
-This version includes a [backport](https://github.com/LKSCOIN/LKSCOIN/pull/2515)
+This version includes a [backport](https://github.com/LKSCOIN/lkscoin-core/pull/2515)
 of [Statoshi functionality](https://github.com/jlopp/statoshi) which allows
 nodes to emit metrics to a StatsD instance. This can help node operators to
 learn more about node performance and network state in general. We added
@@ -267,7 +267,7 @@ A lot of refactoring, code cleanups and other small fixes were done in this rele
 0.17.0.2 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/LKSCOIN/compare/v0.16.1.1...lkspay:v0.17.0.2).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.16.1.1...lkspay:v0.17.0.2).
 
 Credits
 =======
@@ -311,31 +311,31 @@ Lksc Core tree 0.12.1.x was a fork of Bitcoin Core tree 0.12.
 
 These release are considered obsolete. Old release notes can be found here:
 
-- [v0.16.1.1](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.16.1.1.md) released November/17/2020
-- [v0.16.1.0](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.16.1.0.md) released November/14/2020
-- [v0.16.0.1](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.16.0.1.md) released September/30/2020
-- [v0.15.0.0](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.15.0.0.md) released Febrary/18/2020
-- [v0.14.0.5](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.14.0.5.md) released December/08/2019
-- [v0.14.0.4](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.14.0.4.md) released November/22/2019
-- [v0.14.0.3](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.14.0.3.md) released August/15/2019
-- [v0.14.0.2](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.14.0.2.md) released July/4/2019
-- [v0.14.0.1](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.14.0.1.md) released May/31/2019
-- [v0.14.0](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.14.0.md) released May/22/2019
-- [v0.13.3](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.13.3.md) released Apr/04/2019
-- [v0.13.2](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.13.2.md) released Mar/15/2019
-- [v0.13.1](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.13.1.md) released Feb/9/2019
-- [v0.13.0](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.13.0.md) released Jan/14/2019
-- [v0.12.3.4](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.3.4.md) released Dec/14/2018
-- [v0.12.3.3](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.3.3.md) released Sep/19/2018
-- [v0.12.3.2](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.3.2.md) released Jul/09/2018
-- [v0.12.3.1](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.3.1.md) released Jul/03/2018
-- [v0.12.2.3](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.2.3.md) released Jan/12/2018
-- [v0.12.2.2](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.2.2.md) released Dec/17/2017
-- [v0.12.2](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.2.md) released Nov/08/2017
-- [v0.12.1](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.1.md) released Feb/06/2017
-- [v0.12.0](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.12.0.md) released Aug/15/2015
-- [v0.11.2](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.11.2.md) released Mar/04/2015
-- [v0.11.1](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.11.1.md) released Feb/10/2015
-- [v0.11.0](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.11.0.md) released Jan/15/2015
-- [v0.10.x](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.10.0.md) released Sep/25/2014
-- [v0.9.x](https://github.com/LKSCOIN/LKSCOIN/blob/master/doc/release-notes/lks/release-notes-0.9.0.md) released Mar/13/2014
+- [v0.16.1.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.16.1.1.md) released November/17/2020
+- [v0.16.1.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.16.1.0.md) released November/14/2020
+- [v0.16.0.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.16.0.1.md) released September/30/2020
+- [v0.15.0.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.15.0.0.md) released Febrary/18/2020
+- [v0.14.0.5](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.5.md) released December/08/2019
+- [v0.14.0.4](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.4.md) released November/22/2019
+- [v0.14.0.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.3.md) released August/15/2019
+- [v0.14.0.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.2.md) released July/4/2019
+- [v0.14.0.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.1.md) released May/31/2019
+- [v0.14.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.md) released May/22/2019
+- [v0.13.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.3.md) released Apr/04/2019
+- [v0.13.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.2.md) released Mar/15/2019
+- [v0.13.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.1.md) released Feb/9/2019
+- [v0.13.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.0.md) released Jan/14/2019
+- [v0.12.3.4](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.4.md) released Dec/14/2018
+- [v0.12.3.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.3.md) released Sep/19/2018
+- [v0.12.3.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.2.md) released Jul/09/2018
+- [v0.12.3.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.1.md) released Jul/03/2018
+- [v0.12.2.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.2.3.md) released Jan/12/2018
+- [v0.12.2.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.2.2.md) released Dec/17/2017
+- [v0.12.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.2.md) released Nov/08/2017
+- [v0.12.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.1.md) released Feb/06/2017
+- [v0.12.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.0.md) released Aug/15/2015
+- [v0.11.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.11.2.md) released Mar/04/2015
+- [v0.11.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.11.1.md) released Feb/10/2015
+- [v0.11.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.11.0.md) released Jan/15/2015
+- [v0.10.x](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.10.0.md) released Sep/25/2014
+- [v0.9.x](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.9.0.md) released Mar/13/2014

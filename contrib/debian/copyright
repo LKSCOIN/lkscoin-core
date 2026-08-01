@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Lksc Core
 Upstream-Contact: Lksc Core Group, Inc https://www.lksfoundation.org/team/
-Source: https://github.com/LKSCOIN/LKSCOIN
+Source: https://github.com/LKSCOIN/lkscoin-core
 
 Files: *
 Copyright: 2009-2017, Bitcoin Core Developers,

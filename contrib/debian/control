@@ -27,8 +27,8 @@ Build-Depends: debhelper,
  libzmq3-dev
 Standards-Version: 3.9.2
 Homepage: https://www.lksfoundation.org/
-Vcs-Git: git://github.com/LKSCOIN/LKSCOIN.git
-Vcs-Browser: https://github.com/LKSCOIN/LKSCOIN
+Vcs-Git: git://github.com/LKSCOIN/lkscoin-core.git
+Vcs-Browser: https://github.com/LKSCOIN/lkscoin-core
 
 Package: lksd
 Architecture: any

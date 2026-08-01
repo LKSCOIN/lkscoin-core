@@ -30,7 +30,7 @@ packages:
 - "fonts-tuffy"
 - "ccache"
 remotes:
-- "url": "https://github.com/LKSCOIN/LKSCOIN.git"
+- "url": "https://github.com/LKSCOIN/lkscoin-core.git"
   "dir": "lks"
 files:
 - "MacOSX10.11.sdk.tar.gz"
