@@ -37,14 +37,8 @@ UniValue coinjoin(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_INTERNAL_ERROR, "Client-side mixing is not supported on masternodes");
 
     if (!CCoinJoinClientOptions::IsEnabled()) {
-        if (!gArgs.GetBoolArg("-enablecoinjoin", true)) {
-            // otherwise it's on by default, unless cmd line option says otherwise
-            throw JSONRPCError(RPC_INTERNAL_ERROR, "Mixing is disabled via -enablecoinjoin=0 command line option, remove it to enable mixing again");
-        } else {
-            // not enablecoinjoin=false case,
-            // most likely something bad happened and we disabled it while running the wallet
-            throw JSONRPCError(RPC_INTERNAL_ERROR, "Mixing is disabled due to some internal error");
-        }
+        // CoinJoin is not part of the LKSCOIN feature set.
+        throw JSONRPCError(RPC_INTERNAL_ERROR, "CoinJoin mixing is not supported on the LKSCOIN network");
     }
 
     auto it = coinJoinClientManagers.find(pwallet->GetName());

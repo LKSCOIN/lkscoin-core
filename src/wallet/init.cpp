@@ -460,7 +460,9 @@ void WalletInit::AutoLockMasternodeCollaterals() const
 
 void WalletInit::InitCoinJoinSettings() const
 {
-    CCoinJoinClientOptions::SetEnabled(HasWallets() ? gArgs.GetBoolArg("-enablecoinjoin", true) : false);
+    // CoinJoin is not part of the LKSCOIN feature set: hard-disabled
+    // regardless of -enablecoinjoin.
+    CCoinJoinClientOptions::SetEnabled(false);
     if (!CCoinJoinClientOptions::IsEnabled()) {
         return;
     }

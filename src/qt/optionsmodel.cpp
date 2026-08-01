@@ -147,10 +147,9 @@ void OptionsModel::Init(bool resetSettings)
     if (!settings.contains("digits"))
         settings.setValue("digits", "2");
 
-    // CoinJoin
-    if (!settings.contains("fCoinJoinEnabled")) {
-        settings.setValue("fCoinJoinEnabled", true);
-    }
+    // CoinJoin is not part of the LKSCOIN feature set: force it off,
+    // overriding any previously stored setting.
+    settings.setValue("fCoinJoinEnabled", false);
     if (!gArgs.SoftSetBoolArg("-enablecoinjoin", settings.value("fCoinJoinEnabled").toBool())) {
         addOverriddenOption("-enablecoinjoin");
     }
