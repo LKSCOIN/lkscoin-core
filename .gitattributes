@@ -7,6 +7,8 @@
 *.ac text eol=lf
 *.md text eol=lf
 *.png binary
+*.otf binary
+*.ttf binary
 *.ico binary
 *.icns binary
 *.raw binary
