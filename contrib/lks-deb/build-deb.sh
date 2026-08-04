@@ -42,6 +42,12 @@ make install DESTDIR="${PKGDIR}" prefix=/ >/dev/null
 # accident and are of no use to node operators (they add ~170 MB).
 rm -f "${PKGDIR}/bin/test_lks" "${PKGDIR}/bin/test_lks-qt" "${PKGDIR}/bin/bench_lks"
 
+# The staging directory is created by mktemp with mode 0700 and is owned by
+# the building user. Both would end up recorded in the package: dpkg would
+# then apply 0700 to "/" and install user-owned binaries into /bin. Normalise
+# directory permissions here and force root:root ownership at build time.
+find "${PKGDIR}" -type d -exec chmod 755 {} +
+
 mkdir -p "${PKGDIR}/DEBIAN"
 cat > "${PKGDIR}/DEBIAN/control" <<EOF
 Package: lkscoincore
@@ -53,7 +59,7 @@ Maintainer: LKSCoin Foundation <admin@lksfoundation.org>
 Description: LKSCoin Core version ${VERSION}
 EOF
 
-dpkg-deb --build "${PKGDIR}" "${OUTFILE}" >/dev/null
+dpkg-deb --root-owner-group --build "${PKGDIR}" "${OUTFILE}" >/dev/null
 rm -rf "${PKGDIR}"
 
 echo "Done: ${OUTFILE}"
