@@ -457,9 +457,19 @@ public:
         // This is fine at runtime as we'll fall back to using them as a oneshot if they dont support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("www.lkschain.io", true); 
-        vSeeds.emplace_back("5.189.170.226", true); 
-        vSeeds.emplace_back("159.203.17.166", true); 
+        // DNS seeds: hostnames, so the node list can be updated via DNS without
+        // shipping a new client. Each seedN.lkschain.io must be a plain A record
+        // (NO Cloudflare proxy - the proxied www.lkschain.io only resolved to CDN
+        // addresses, which is why it was removed) pointing at nodes listening on
+        // port 9400. The second argument is false because these are static A
+        // records and cannot filter by service bits.
+        vSeeds.emplace_back("seed.lkschain.io", false);
+        vSeeds.emplace_back("seed1.lkschain.io", false);
+        vSeeds.emplace_back("seed2.lkschain.io", false);
+        vSeeds.emplace_back("seed3.lkschain.io", false);
+        vSeeds.emplace_back("seed4.lkschain.io", false);
+        vSeeds.emplace_back("seed5.lkschain.io", false);
+        vSeeds.emplace_back("seed6.lkschain.io", false);
 
         // Lks addresses start with 'X'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,76);
