@@ -48,20 +48,28 @@ POSE=$(Q masternode status | grep -o '"PoSePenalty": *[0-9-]*' | grep -o '[0-9-]
 POSEBAN=$(Q masternode status | grep -o '"PoSeBanHeight": *[0-9-]*' | grep -o '[0-9-]*$')
 LASTPAID=$(Q masternode status | grep -o '"lastPaidHeight": *[0-9]*' | grep -o '[0-9]*$')
 
-echo
-echo "ProTx:       $PROTX"
-echo "State:       $STATE"
-echo "PoSePenalty: $POSE   PoSeBanHeight: $POSEBAN"
-echo "Last paid:   block $LASTPAID  (now: $BLOCKS, delta: $((BLOCKS-LASTPAID)))"
-echo
+if [ -z "$PROTX" ]; then
+  echo
+  echo "This node is not configured as a masternode - skipping masternode checks."
+  echo "(run this script on a masternode for the full report)"
+  IS_MN=0
+else
+  IS_MN=1
+  echo
+  echo "ProTx:       $PROTX"
+  echo "State:       $STATE"
+  echo "PoSePenalty: $POSE   PoSeBanHeight: $POSEBAN"
+  echo "Last paid:   block $LASTPAID  (now: $BLOCKS, delta: $((BLOCKS-LASTPAID)))"
+  echo
 
-[ "$STATE" = "READY" ] && ok "masternode READY" || bad "masternode state: $STATE"
-[ "$POSE" = "0" ] && ok "no PoSe penalty" || bad "PoSe penalty is $POSE"
-[ "$POSEBAN" = "-1" ] && ok "never PoSe banned" || bad "PoSe banned at height $POSEBAN"
+  [ "$STATE" = "READY" ] && ok "masternode READY" || bad "masternode state: $STATE"
+  [ "$POSE" = "0" ] && ok "no PoSe penalty" || bad "PoSe penalty is $POSE"
+  [ "$POSEBAN" = "-1" ] && ok "never PoSe banned" || bad "PoSe banned at height $POSEBAN"
+fi
 
 # Expected payment interval ~= number of enabled masternodes (in blocks).
 ENABLED=$(Q masternode count | grep -o '"enabled": *[0-9]*' | grep -o '[0-9]*$')
-if [ -n "$ENABLED" ] && [ -n "$LASTPAID" ]; then
+if [ "$IS_MN" = "1" ] && [ -n "$ENABLED" ] && [ -n "$LASTPAID" ]; then
   DELTA=$((BLOCKS-LASTPAID))
   echo "  (enabled masternodes: $ENABLED - expected payment interval ~$ENABLED blocks)"
   if [ "$DELTA" -gt $((ENABLED*2)) ]; then
@@ -73,18 +81,29 @@ fi
 
 # --- 3. Quorums and ChainLocks ----------------------------------------------
 echo
-MEMBEROF=$(Q quorum memberof "$PROTX" | grep -c '"quorumHash"')
+[ "$IS_MN" = "1" ] && MEMBEROF=$(Q quorum memberof "$PROTX" | grep -c '"quorumHash"')
 CL=$(Q getbestchainlock 2>/dev/null | grep -o '"height": *[0-9]*' | grep -o '[0-9]*$')
+Q50=$(Q quorum list | sed -n '/llmq_50_60/,/]/p' | grep -c '"0')
+Q400_60=$(Q quorum list | sed -n '/llmq_400_60/,/]/p' | grep -c '"0')
 
-echo "Quorum memberships: ${MEMBEROF:-0}"
+[ "$IS_MN" = "1" ] && echo "Quorum memberships: ${MEMBEROF:-0}"
+echo "Active quorums:     llmq_50_60=$Q50  llmq_400_60=$Q400_60"
 echo "Best ChainLock:     ${CL:-none}"
+
+# Sporks gate the whole LLMQ/ChainLock machinery: show them, they are the first
+# thing to look at when quorums or ChainLocks are missing.
 echo
+echo "Sporks:"
+Q spork show | sed 's/[",]//g' | grep -E "SPORK" | sed 's/^/  /'
+echo
+
+[ "$Q50" -gt 0 ] 2>/dev/null && ok "LLMQ 50_60 quorums present ($Q50)" || bad "no llmq_50_60 quorums"
 
 if [ -n "$CL" ]; then
   LAG=$((BLOCKS-CL))
   [ "$LAG" -le 5 ] && ok "ChainLock current (lag $LAG blocks)" || warn "ChainLock lagging $LAG blocks"
 else
-  warn "no ChainLock seen - check whether the network is producing them"
+  warn "no ChainLock - check SPORK_19_CHAINLOCKS_ENABLED above and quorum signing activity"
 fi
 
 # --- 4. Log scan -------------------------------------------------------------
