@@ -54,12 +54,15 @@ def varstr(s):
 
 
 def netaddr(ip, port):
-    """26-byte network address: services(8) + IPv6/IPv4-mapped(16) + port(2 BE)."""
+    """26-byte network address: services(8) + IPv6 (or IPv4-mapped) + port(2 BE)."""
     try:
-        raw = socket.inet_aton(ip)
+        addr = b"\x00" * 10 + b"\xff\xff" + socket.inet_aton(ip)
     except OSError:
-        raw = b"\x00" * 4
-    return struct.pack("<Q", 0) + b"\x00" * 10 + b"\xff\xff" + raw + struct.pack(">H", port)
+        try:
+            addr = socket.inet_pton(socket.AF_INET6, ip)
+        except OSError:
+            addr = b"\x00" * 16
+    return struct.pack("<Q", 0) + addr + struct.pack(">H", port)
 
 
 def version_payload(ip, port):
@@ -112,13 +115,35 @@ def parse_version(payload):
     return version, ua, height
 
 
+def split_address(address):
+    """Split "1.2.3.4:9400" or "[2001:db8::1]:9400" into (host, port).
+    Returns (None, None) for unset/invalid entries such as "[::]:0"."""
+    address = (address or "").strip()
+    if address.startswith("["):                       # bracketed IPv6
+        host, sep, rest = address[1:].partition("]")
+        port = rest[1:] if rest.startswith(":") else ""
+    elif address.count(":") > 1:                      # bare IPv6, no port
+        host, port = address, ""
+    else:
+        host, _, port = address.partition(":")
+    try:
+        port = int(port) if port else DEFAULT_PORT
+    except ValueError:
+        return None, None
+    if not host or host in ("::", "0.0.0.0") or not 0 < port < 65536:
+        return None, None
+    return host, port
+
+
 def probe(address, timeout):
     """Connect to a masternode and complete enough of the handshake to learn
     its version. Returns a dict describing the outcome."""
-    host, _, port = address.partition(":")
-    port = int(port or DEFAULT_PORT)
+    host, port = split_address(address)
     res = {"address": address, "reachable": False, "protocol": "",
            "subversion": "", "height": "", "error": ""}
+    if host is None:
+        res["error"] = "NoAddress"
+        return res
     sock = None
     try:
         sock = socket.create_connection((host, port), timeout=timeout)
