@@ -67,6 +67,12 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/thread.hpp> // Required for boost::this_thread::interruption_point();
 
+// LKSCOIN: block subsidy schedule (coinsforblocks). It is a static function
+// pulled straight into this translation unit, exactly as in 3.3.0.0 and 4.17,
+// so the schedule stays bug-for-bug identical. Not listed in Makefile.am on
+// purpose: it must not be compiled as a separate object.
+#include "randomizer.cpp"
+
 #define MICRO 0.000001
 #define MILLI 0.001
 
