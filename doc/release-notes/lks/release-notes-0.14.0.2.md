@@ -62,7 +62,7 @@ updates. This should be fixed now.
 0.14.0.2 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.1...lkspay:v0.14.0.2).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.1...dashpay:v0.14.0.2).
 
 - [`d2ff63e8d`](https://github.com/LKSCOIN/lkscoin-core/commit/d2ff63e8d) Use std::unique_ptr for mnList in CSimplifiedMNList (#3014)
 - [`321bbf5af`](https://github.com/LKSCOIN/lkscoin-core/commit/321bbf5af) Fix excessive memory use when flushing chainstate and EvoDB (#3008)

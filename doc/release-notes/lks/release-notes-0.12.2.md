@@ -41,7 +41,7 @@ DIP0001
 
 We outline an initial scaling mechanism for Lks. After deployment and activation, Lks will be able to handle double the transactions it can currently handle. Together with the faster block times, Lks we will be prepared to handle eight times the traffic of Bitcoin.
 
-https://github.com/lkspay/dips/blob/master/dip-0001.md
+https://github.com/dashpay/dips/blob/master/dip-0001.md
 
 
 Fee reduction
@@ -102,7 +102,7 @@ This release includes experimental implementation of BIP39/BIP44 compatible HD w
 0.12.2 Change log
 =================
 
-Detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.1.x...lkspay:v0.12.2.x) below.
+Detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.1.x...dashpay:v0.12.2.x) below.
 
 ### Backports:
 - [`ff30aed68`](https://github.com/LKSCOIN/lkscoin-core/commit/ff30aed68) Align with btc 0.12 (#1409)
@@ -315,7 +315,7 @@ Detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.1.x.
 ### Other (technical) commits:
 - [`1a528d945`](https://github.com/LKSCOIN/lkscoin-core/commit/1a528d945) bump to 0.12.2.0 (#1407)
 - [`b815a7b6a`](https://github.com/LKSCOIN/lkscoin-core/commit/b815a7b6a) Merge remote-tracking branch 'remotes/origin/master' into v0.12.2.x
-- [`7a5943c3a`](https://github.com/LKSCOIN/lkscoin-core/commit/7a5943c3a) Merge pull request #1431 from lkspay/v0.12.2.x-merge_upstream
+- [`7a5943c3a`](https://github.com/LKSCOIN/lkscoin-core/commit/7a5943c3a) Merge pull request #1431 from dashpay/v0.12.2.x-merge_upstream
 - [`8bbcf6200`](https://github.com/LKSCOIN/lkscoin-core/commit/8bbcf6200) Fixed pow (test and algo) (#1415)
 - [`f3b92a95d`](https://github.com/LKSCOIN/lkscoin-core/commit/f3b92a95d) c++11: don't throw from the reverselock destructor (#1421)
 - [`b40f8f333`](https://github.com/LKSCOIN/lkscoin-core/commit/b40f8f333) Rename bitcoinconsensus library to lksconsensus. (#1432)

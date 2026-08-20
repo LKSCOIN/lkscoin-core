@@ -59,7 +59,7 @@ Several opcodes have been reactivated/introduced to broaden the functionality
 of the system and enable developers to build new solutions. These opcodes are
 a combination of previously disabled ones that have been found to be safe and
 new ones previously introduced by Bitcoin Cash. Details of the opcodes are
-provided in [DIP-0020](https://github.com/lkspay/dips/blob/master/dip-0020.md).
+provided in [DIP-0020](https://github.com/dashpay/dips/blob/master/dip-0020.md).
 
 These opcodes are activated via a BIP9 style hard fork that will begin
 signalling on July 1st using bit 6. Any nodes that do not upgrade by the time
@@ -71,7 +71,7 @@ Quorum resilience has been improved by enabling masternodes to request DKG data
 from other quorum members. This allows Lks Platform to obtain required
 information while also making it possible for corrupted masternodes to recover
 the DKG data they need to participate in quorums they are part of. Details are
-provided in [DIP-0021](https://github.com/lkspay/dips/blob/master/dip-0021.md).
+provided in [DIP-0021](https://github.com/dashpay/dips/blob/master/dip-0021.md).
 
 Platform support
 ----------------
@@ -102,7 +102,7 @@ Network performance improvements
 This version of Lksc Core includes multiple optimizations to the network and
 p2p message handling code.
 
-We reintroduced [Intra-Quorum Connections](https://github.com/lkspay/dips/blob/master/dip-0006.md#intra-quorum-communication)
+We reintroduced [Intra-Quorum Connections](https://github.com/dashpay/dips/blob/master/dip-0006.md#intra-quorum-communication)
 which were temporary disabled with the introduction of
 `SPORK_21_QUORUM_ALL_CONNECTED`. This should make communications for masternodes
 belonging to the same quorum more robust and improve network connectivity in
@@ -267,7 +267,7 @@ A lot of refactoring, code cleanups and other small fixes were done in this rele
 0.17.0.2 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.16.1.1...lkspay:v0.17.0.2).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.16.1.1...dashpay:v0.17.0.2).
 
 Credits
 =======

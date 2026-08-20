@@ -208,7 +208,7 @@ A lot of refactoring, code cleanups and other small fixes were done in this rele
 0.12.3.1 Change log
 ===================
 
-See detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.2.3...lkspay:v0.12.3.1) below.
+See detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.2.3...dashpay:v0.12.3.1) below.
 
 ### Governance:
 - [`6c79c348e`](https://github.com/LKSCOIN/lkscoin-core/commit/6c79c348e) Drop "MAY, 2018" clause for proposal validation on mainnet (#2101)

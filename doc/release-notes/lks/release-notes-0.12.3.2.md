@@ -67,7 +67,7 @@ connectivity on devnets which are using nodes with multiple different ports.
 0.12.3.2 Change log
 ===================
 
-See detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.1...lkspay:v0.12.3.2) below.
+See detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.1...dashpay:v0.12.3.2) below.
 
 ### Network:
 - [`2474d9cb8`](https://github.com/LKSCOIN/lkscoin-core/commit/2474d9cb8) Sync mn list and mnw list from 3 peers max (#2169)

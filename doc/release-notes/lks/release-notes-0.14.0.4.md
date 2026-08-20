@@ -94,7 +94,7 @@ in Bitcoin v0.15.1. This release of Lksc Core includes a backport of this fix.
 0.14.0.4 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.3...lkspay:v0.14.0.4).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.3...dashpay:v0.14.0.4).
 
 - [`5f98ed7a5`](https://github.com/LKSCOIN/lkscoin-core/commit/5f98ed7a5) [v0.14.0.x] Bump version to 0.14.0.4 and draft release notes (#3203)
 - [`c0dda38fe`](https://github.com/LKSCOIN/lkscoin-core/commit/c0dda38fe) Circumvent BIP69 sorting in fundrawtransaction.py test (#3100)

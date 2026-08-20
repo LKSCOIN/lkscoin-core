@@ -49,7 +49,7 @@ all the hashes of the final quorum commitments of all active LLMQ sets. This all
 to verify active LLMQ sets and use this information to further verify ChainLocks and LLMQ-based
 InstantSend messages. Coinbase Payload v2 relies on DIP0008 (bit 4) activation.
 
-https://github.com/lkspay/dips/blob/master/dip-0004.md#calculating-the-merkle-root-of-the-active-llmqs
+https://github.com/dashpay/dips/blob/master/dip-0004.md#calculating-the-merkle-root-of-the-active-llmqs
 
 DIP0008 - ChainLocks
 --------------------
@@ -58,7 +58,7 @@ finding near-instant consensus on the longest valid/accepted chain. ChainLocks l
 Signing Requests/Sessions to accomplish this. ChainLocks relies on DIP0008 (bit 4) activation and
 `SPORK_19_CHAINLOCKS_ENABLED` spork.
 
-Read more: https://github.com/lkspay/dips/blob/master/dip-0008.md
+Read more: https://github.com/dashpay/dips/blob/master/dip-0008.md
 
 DIP0010 - LLMQ-based InstantSend
 --------------------------------
@@ -73,7 +73,7 @@ differentiated transactions as InstantSend transactions by using the P2P message
 Since this distinction is not required in the new system, the P2P message “ix” will be removed after
 DIP0008 deployment (for now, transactions sent via "ix" message will be relayed further via "tx" message).
 
-Read more: https://github.com/lkspay/dips/blob/master/dip-0010.md
+Read more: https://github.com/dashpay/dips/blob/master/dip-0010.md
 
 Network
 ------
@@ -173,7 +173,7 @@ A lot of refactoring, backports, code cleanups and other small fixes were done i
  0.14.0.0 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.13.3.0...lkspay:v0.14.0.0).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.13.3.0...dashpay:v0.14.0.0).
 
 - [`612a90e8c`](https://github.com/LKSCOIN/lkscoin-core/commit/612a90e8c) Set CLIENT_VERSION_IS_RELEASE to true (#2926)
 - [`9482f77e5`](https://github.com/LKSCOIN/lkscoin-core/commit/9482f77e5) Update help text via gen-manpages.sh (#2929)

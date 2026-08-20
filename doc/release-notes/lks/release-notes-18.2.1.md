@@ -112,7 +112,7 @@ None
 v18.2.1 Change log
 ==================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.2.0...lkspay:v18.2.1).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.2.0...dashpay:v18.2.1).
 
 Credits
 =======

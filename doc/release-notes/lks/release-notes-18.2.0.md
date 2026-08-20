@@ -127,7 +127,7 @@ This release introduces many hundreds updates from Bitcoin v0.18/v0.19/v0.20/v0.
 v18.2.0 Change log
 ==================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.1.0...lkspay:v18.2.0).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.1.0...dashpay:v18.2.0).
 
 Credits
 =======

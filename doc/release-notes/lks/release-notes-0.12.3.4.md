@@ -54,7 +54,7 @@ When deployed on testnet, it is required to start with a fresh data directory or
 0.12.3.4 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.3...lkspay:v0.12.3.4).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.3...dashpay:v0.12.3.4).
 
 Python Support
 --------------

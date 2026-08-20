@@ -88,7 +88,7 @@ The "getmempoolinfo" RPC also has a new field now which shows the same informati
 0.14.0.3 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.2...lkspay:v0.14.0.3).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.2...dashpay:v0.14.0.3).
 
 - [`f2443709b`](https://github.com/LKSCOIN/lkscoin-core/commit/f2443709b) Update release-notes.md for 0.14.0.3 (#3054)
 - [`17ba23871`](https://github.com/LKSCOIN/lkscoin-core/commit/17ba23871) Re-verify invalid IS sigs when the active quorum set rotated (#3052)

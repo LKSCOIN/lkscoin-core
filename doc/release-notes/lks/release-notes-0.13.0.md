@@ -59,7 +59,7 @@ requires the software/library to at least implement skipping and ignoring the ex
 Validation and processing of the inputs and outputs of a special transaction must remain identical to
 classical transactions.
 
-Read more: https://github.com/lkspay/dips/blob/master/dip-0002.md
+Read more: https://github.com/dashpay/dips/blob/master/dip-0002.md
 
 DIP0003 - Deterministic Masternode Lists
 ----------------------------------------
@@ -94,7 +94,7 @@ other payload information (DIP0002).
 The new system is going to be activated via combination of a BIP9-like deployment (bit 3) and new spork
 (`SPORK_15_DETERMINISTIC_MNS_ENABLED`).
 
-Read more: https://github.com/lkspay/dips/blob/master/dip-0003.md
+Read more: https://github.com/dashpay/dips/blob/master/dip-0003.md
 Upgrade instructions: https://docs.lksfoundation.org/DIP3-masternode-upgrade
 
 DIP0004 - Simplified Verification of Deterministic Masternode Lists
@@ -108,7 +108,7 @@ nodes in the network. This provided list must be verifiable by the SPV client wi
 chain. This DIP proposes additions to the block’s coinbase transaction and new P2P messages to get and
 update a masternode list with additional proof data.
 
-Read more: https://github.com/lkspay/dips/blob/master/dip-0004.md
+Read more: https://github.com/dashpay/dips/blob/master/dip-0004.md
 
 Mining
 ------
@@ -121,7 +121,7 @@ P2SH addresses, the simplest way to fix it is to use `script` field which shows 
 entry of masternode payments array in `getblocktemplate`.
 
 And finally, after DIP0003 activation your pool software must be able to produce Coinbase Special
-Transaction https://github.com/lkspay/dips/blob/master/dip-0004.md#coinbase-special-transaction.
+Transaction https://github.com/dashpay/dips/blob/master/dip-0004.md#coinbase-special-transaction.
 Use `coinbase_payload` from `getblocktemplate` to get extra payload needed to construct this transaction.
 
 PrivateSend
@@ -265,7 +265,7 @@ A lot of refactoring, code cleanups and other small fixes were done in this rele
 0.13.0.0 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.4...lkspay:v0.13.0.0).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.4...dashpay:v0.13.0.0).
 
 ### Network
 - [`03a6865d9`](https://github.com/LKSCOIN/lkscoin-core/commit/03a6865d9) Enforce correct port on mainnet for DIP3 MNs (#2576)
@@ -671,7 +671,7 @@ See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0
 - [`b47617325`](https://github.com/LKSCOIN/lkscoin-core/commit/b47617325) Install python3 in gitian builds (#2182)
 - [`7a85e24c3`](https://github.com/LKSCOIN/lkscoin-core/commit/7a85e24c3) Remove deprecated gitian-rpi2.yml descriptor (#2183)
 - [`1681d6366`](https://github.com/LKSCOIN/lkscoin-core/commit/1681d6366) Replace Lks-specific threads with Lks-specific scheduled tasks (#2043)
-- [`dac090964`](https://github.com/LKSCOIN/lkscoin-core/commit/dac090964) remove lkspay.io dns seed entry (#2181)
+- [`dac090964`](https://github.com/LKSCOIN/lkscoin-core/commit/dac090964) remove dashpay.io dns seed entry (#2181)
 - [`753c2436b`](https://github.com/LKSCOIN/lkscoin-core/commit/753c2436b) Fix MissingPropertyException on Jenkins when no cache was found (#2180)
 - [`f3e380659`](https://github.com/LKSCOIN/lkscoin-core/commit/f3e380659) Move to in-docker CI builds and add Jenkins support (#2178)
 - [`23dde9f12`](https://github.com/LKSCOIN/lkscoin-core/commit/23dde9f12) Remove a few annoying debug prints from CMasternodeMan (#2179)

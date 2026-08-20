@@ -56,7 +56,7 @@ internal encryption logic and RPC behaviour were not affected.
 0.16.1.1 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.16.1.0...lkspay:v0.16.1.1).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.16.1.0...dashpay:v0.16.1.1).
 
 - [`ccef3b4836`](https://github.com/LKSCOIN/lkscoin-core/commit/ccef3b48363d8bff4b919d9119355182e3902ef3) qt: Fix wallet encryption dialog (#3816)
 

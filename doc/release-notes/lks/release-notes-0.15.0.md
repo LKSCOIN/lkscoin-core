@@ -58,8 +58,8 @@ InstantSend transactions. The legacy system was disabled together with the succe
 but we had to keep supporting the legacy system for a while to ensure a smooth transition period. This version finally drops
 the legacy system completely.
 
-Read more about ChainLocks: https://github.com/lkspay/dips/blob/master/dip-0008.md
-Read more about LLMQ-based InstantSend: https://github.com/lkspay/dips/blob/master/dip-0010.md
+Read more about ChainLocks: https://github.com/dashpay/dips/blob/master/dip-0008.md
+Read more about LLMQ-based InstantSend: https://github.com/dashpay/dips/blob/master/dip-0010.md
 
 Sporks
 ------
@@ -231,7 +231,7 @@ modules were reorganized in separate folders to make navigation through code a b
 0.15 Change log
 ===============
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.5...lkspay:v0.15.0.0).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.5...dashpay:v0.15.0.0).
 
 - [`3c055bf79`](https://github.com/LKSCOIN/lkscoin-core/commit/3c055bf79) Bump nMinimumChainWork and defaultAssumeValid (#3336)
 - [`818e7a6f7`](https://github.com/LKSCOIN/lkscoin-core/commit/818e7a6f7) Update release notes

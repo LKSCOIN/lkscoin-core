@@ -57,7 +57,7 @@ other nodes rather than dropped. This patch updates the behavior so that old qfc
 18.1.1 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.1.0...lkspay:v18.1.1`).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.1.0...dashpay:v18.1.1`).
 
 - [`82d7b6e94a154c4b16bd634ef1a5eb168e22030c`](https://github.com/LKSCOIN/lkscoin-core/commit/82d7b6e94a154c4b16bd634ef1a5eb168e22030c) fix: avoid re-propogating old qfcommit messages (#5145)
 - [`6c5a310c14e5d97794fbaa84e5ca993c0961ae09`](https://github.com/LKSCOIN/lkscoin-core/commit/6c5a310c14e5d97794fbaa84e5ca993c0961ae09) chore: bump version

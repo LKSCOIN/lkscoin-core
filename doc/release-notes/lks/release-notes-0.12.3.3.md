@@ -52,7 +52,7 @@ can cause node receiving a block to crash https://github.com/bitcoin/bitcoin/pul
 0.12.3.3 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.2...lkspay:v0.12.3.3).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.3.2...dashpay:v0.12.3.3).
 
 Credits
 =======

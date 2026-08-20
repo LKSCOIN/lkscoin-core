@@ -56,7 +56,7 @@ a couple of build issues and a rare crash on some linux systems.
 0.17.0.3 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.17.0.2...lkspay:v0.17.0.3).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.17.0.2...dashpay:v0.17.0.3).
 
 - [`6a54af0df7`](https://github.com/LKSCOIN/lkscoin-core/commit/6a54af0df7) Bump to v0.17.0.3
 - [`97e8461234`](https://github.com/LKSCOIN/lkscoin-core/commit/97e8461234) doc: Archive v0.17.0.2 release notes

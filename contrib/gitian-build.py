@@ -27,7 +27,7 @@ def setup():
         programs += ['apt-cacher-ng', 'lxc', 'debootstrap']
     subprocess.check_call(['sudo', 'apt-get', 'install', '-qq'] + programs)
     if not os.path.isdir('gitian.sigs'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/lkspay/gitian.sigs.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/dashpay/gitian.sigs.git'])
     if not os.path.isdir('lks-detached-sigs'):
         subprocess.check_call(['git', 'clone', 'https://github.com/LKSCOIN/lkscoin-core-detached-sigs.git'])
     if not os.path.isdir('gitian-builder'):

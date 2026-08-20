@@ -2,7 +2,7 @@
 
 This issue tracker is only for technical issues related to Lksc Core.
 
-General Lks questions and/or support requests and are best directed to the [Lkspay Reddit](https://www.reddit.com/r/lkspay/).
+General Lks questions and/or support requests and are best directed to the [Lkspay Reddit](https://www.reddit.com/r/dashpay/).
 
 To report critical security issues, email infosec@lksfoundation.org and/or see the LKS bug bounty program on [Bugcrowd](https://bugcrowd.com/lksdigitalcash) instead of creating Github issues.
 

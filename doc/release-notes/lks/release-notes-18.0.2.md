@@ -56,7 +56,7 @@ This release resolves some excessive memory usage via the "evo" database (evodb)
 18.0.2 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.0.1...lkspay:v18.0.2`).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.0.1...dashpay:v18.0.2`).
 
 - [`666ff7bff9`](https://github.com/LKSCOIN/lkscoin-core/commit/666ff7bff9) merge bitcoin#14193: Add missing mempool locks
 - [`96f4022a6a`](https://github.com/LKSCOIN/lkscoin-core/commit/96f4022a6a) chore: archive release-nodes.md

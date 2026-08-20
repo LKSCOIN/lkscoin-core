@@ -71,7 +71,7 @@ been added to support Lks Platform. This update introduces versioning to
 InstantSend messages and adds quorum information to them. While the previous
 design was sufficient for core chain payments, the platform chain will benefit
 from this enhanced verification capability. Details about deterministic
-InstantSend are provided in [DIP-0022](https://github.com/lkspay/dips/blob/master/dip-0022.md).
+InstantSend are provided in [DIP-0022](https://github.com/dashpay/dips/blob/master/dip-0022.md).
 
 Deterministic InstantSend will be activated with the DIP0024 hard fork.
 
@@ -95,7 +95,7 @@ future hard forks to be activated quickly and safely without any
 “race conditions” if miners and masternodes update at significantly different
 speeds. Effectively there will be a masternode signal on chain in addition to
 the miner one to ensure smooth transitions. Details of the enhanced hard fork
-system are provided in [DIP-0023](https://github.com/lkspay/dips/blob/master/dip-0023.md).
+system are provided in [DIP-0023](https://github.com/dashpay/dips/blob/master/dip-0023.md).
 
 Network improvements
 --------------------
@@ -258,7 +258,7 @@ A lot of refactoring, code cleanups and other small fixes were done in this rele
 v18.0.1 Change log
 ==================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.17.0.3...lkspay:v18.0.1).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.17.0.3...dashpay:v18.0.1).
 
 Credits
 =======

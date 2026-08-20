@@ -73,7 +73,7 @@ RPC changes
 0.16.1.0 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.16.0.1...lkspay:v0.16.1.0).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.16.0.1...dashpay:v0.16.1.0).
 
 - [`b1c930bc86`](https://github.com/LKSCOIN/lkscoin-core/commit/b1c930bc86) [v0.16.x] bump version in configure.ac (#3788)
 - [`3d94e714a9`](https://github.com/LKSCOIN/lkscoin-core/commit/3d94e714a9) contrib|src: Update hard coded seeds (#3791)

@@ -76,7 +76,7 @@ This release also fixes a few crashes and compatibility issues.
 0.12.2.3 Change log
 ===================
 
-See detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.2.2...lkspay:v0.12.2.3) below.
+See detailed [change log](https://github.com/LKSCOIN/lkscoin-core/compare/v0.12.2.2...dashpay:v0.12.2.3) below.
 
 ### Backports:
 - [`068b20bc7`](https://github.com/LKSCOIN/lkscoin-core/commit/068b20bc7) Merge #8256: BUG: bitcoin-qt crash

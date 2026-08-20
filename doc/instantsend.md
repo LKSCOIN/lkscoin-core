@@ -12,8 +12,8 @@ When a "Transaction Lock" occurs the hash of the related transaction is broadcas
 * `zmqpubhashtxlock`: publishes the transaction hash when locked via InstantSend
 
 This mechanism has been integrated into Bitcore-Node-Lks which allows for notification to be broadcast through Insight API in one of two ways:
-* WebSocket: [https://github.com/lkspay/insight-api-lks#web-socket-api](https://github.com/lkspay/insight-api-lks#web-socket-api)
-* API: [https://github.com/lkspay/insight-api-lks#instantsend-transactions](https://github.com/lkspay/insight-api-lks#instantsend-transactions)
+* WebSocket: [https://github.com/dashpay/insight-api-lks#web-socket-api](https://github.com/dashpay/insight-api-lks#web-socket-api)
+* API: [https://github.com/dashpay/insight-api-lks#instantsend-transactions](https://github.com/dashpay/insight-api-lks#instantsend-transactions)
 
 #### Command line option
 

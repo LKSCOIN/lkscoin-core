@@ -66,7 +66,7 @@ known in the network. This should cause ChainLocks to succeed in such situations
 0.14.0.5 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.4...lkspay:v0.14.0.5).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.14.0.4...dashpay:v0.14.0.5).
 
 - [`20d4a27778`](https://github.com/LKSCOIN/lkscoin-core/commit/dc07a0c5e1) Make sure mempool txes are properly processed by CChainLocksHandler despite node restarts (#3230)
 - [`dc07a0c5e1`](https://github.com/LKSCOIN/lkscoin-core/commit/dc07a0c5e1) [v0.14.0.x] Bump version and prepare release notes (#3228)

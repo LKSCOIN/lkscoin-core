@@ -70,7 +70,7 @@ There are few bug fixes in this release:
  0.13.3.0 Change log
 ===================
 
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.13.2.0...lkspay:v0.13.3.0).
+See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v0.13.2.0...dashpay:v0.13.3.0).
 
 ### Backports
 
