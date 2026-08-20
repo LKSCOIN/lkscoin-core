@@ -1,3 +1,2 @@
-43.229.77.46:19999
-45.77.167.247:19999
-178.62.203.249:19999
+# List of fixed seed nodes for the LKSCOIN testnet.
+# (LKSCOIN testnet is currently not operating; list intentionally empty.)

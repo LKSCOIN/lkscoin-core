@@ -268,7 +268,16 @@ public:
         // This is fine at runtime as we'll fall back to using them as a oneshot if they don't support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("dnsseed.lksfoundation.org");
+        // DNS seeds: plain A records (NO Cloudflare proxy - a proxied hostname only
+        // resolves to CDN addresses and is useless as a seed) pointing at nodes
+        // listening on port 9400.
+        vSeeds.emplace_back("seed.lkschain.io");
+        vSeeds.emplace_back("seed1.lkschain.io");
+        vSeeds.emplace_back("seed2.lkschain.io");
+        vSeeds.emplace_back("seed3.lkschain.io");
+        vSeeds.emplace_back("seed4.lkschain.io");
+        vSeeds.emplace_back("seed5.lkschain.io");
+        vSeeds.emplace_back("seed6.lkschain.io");
 
         // Lks addresses start with 'X'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,76);
@@ -472,7 +481,7 @@ public:
 
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("testnet-seed.lksdot.io"); // Just a static list of stable node(s), only supports x9
+        vSeeds.emplace_back("fork.lkschain.io"); // LKSCOIN testnet (not currently operating)
 
         // Testnet Lks addresses start with 'y'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,140);
