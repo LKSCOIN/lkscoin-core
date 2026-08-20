@@ -759,7 +759,7 @@ public:
      */
     void UpdateDevnetLLMQChainLocks(Consensus::LLMQType llmqType)
     {
-        consensus.llmqTypeChainLocks = Consensus::LLMQType::LLMQ_50_60;
+        consensus.llmqTypeChainLocks = llmqType;
     }
     void UpdateDevnetLLMQChainLocksFromArgs(const ArgsManager& args);
 
@@ -768,7 +768,7 @@ public:
      */
     void UpdateDevnetLLMQInstantSend(Consensus::LLMQType llmqType)
     {
-        consensus.llmqTypeInstantSend = Consensus::LLMQType::LLMQ_50_60;
+        consensus.llmqTypeInstantSend = llmqType;
     }
 
     /**
@@ -784,7 +784,7 @@ public:
      */
     void UpdateDevnetPowTargetSpacing(int64_t nPowTargetSpacing)
     {
-        consensus.nPowTargetSpacing = 2.5 * 60;
+        consensus.nPowTargetSpacing = nPowTargetSpacing;
     }
 
     /**
@@ -908,6 +908,8 @@ public:
         UpdateVersionBitsParametersFromArgs(args);
         UpdateDIP3ParametersFromArgs(args);
         UpdateDIP8ParametersFromArgs(args);
+        UpdateMNPurgeParametersFromArgs(args);
+        UpdateLKSSmallQuorumHeightFromArgs(args);
         UpdateBudgetParametersFromArgs(args);
 
         genesis = CreateGenesisBlock(1496594050, 530659, 0x1e0ffff0, 1, 1000 * COIN); 
@@ -1005,8 +1007,8 @@ public:
      */
     void UpdateDIP3Parameters(int nActivationHeight, int nEnforcementHeight)
     {
-        consensus.DIP0003Height = 432;
-        consensus.DIP0003EnforcementHeight = 500;
+        consensus.DIP0003Height = nActivationHeight;
+        consensus.DIP0003EnforcementHeight = nEnforcementHeight;
     }
     void UpdateDIP3ParametersFromArgs(const ArgsManager& args);
 
@@ -1015,8 +1017,25 @@ public:
      */
     void UpdateDIP8Parameters(int nActivationHeight)
     {
-        consensus.DIP0008Height = 432;
+        consensus.DIP0008Height = nActivationHeight;
     }
+
+    /**
+     * LKSCOIN network revival parameters. Regtest only: lets the masternode
+     * purge and the small quorum type be exercised without recompiling.
+     */
+    void UpdateMNPurgeParameters(int nStartHeight, int nPurgeHeight)
+    {
+        consensus.nMNPurgeStartHeight = nStartHeight;
+        consensus.nMNPurgeHeight = nPurgeHeight;
+    }
+    void UpdateMNPurgeParametersFromArgs(const ArgsManager& args);
+
+    void UpdateLKSSmallQuorumHeight(int nActivationHeight)
+    {
+        consensus.nLKSSmallQuorumHeight = nActivationHeight;
+    }
+    void UpdateLKSSmallQuorumHeightFromArgs(const ArgsManager& args);
     void UpdateDIP8ParametersFromArgs(const ArgsManager& args);
 
     /**
@@ -1024,9 +1043,9 @@ public:
      */
     void UpdateBudgetParameters(int nMasternodePaymentsStartBlock, int nBudgetPaymentsStartBlock, int nSuperblockStartBlock)
     {
-        consensus.nMasternodePaymentsStartBlock = 240;
-        consensus.nBudgetPaymentsStartBlock = 1000;
-        consensus.nSuperblockStartBlock = 1500;
+        consensus.nMasternodePaymentsStartBlock = nMasternodePaymentsStartBlock;
+        consensus.nBudgetPaymentsStartBlock = nBudgetPaymentsStartBlock;
+        consensus.nSuperblockStartBlock = nSuperblockStartBlock;
     }
     void UpdateBudgetParametersFromArgs(const ArgsManager& args);
 
@@ -1134,6 +1153,39 @@ void CRegTestParams::UpdateDIP8ParametersFromArgs(const ArgsManager& args)
     }
     LogPrintf("Setting DIP8 parameters to activation=%ld\n", nDIP8ActivationHeight);
     UpdateDIP8Parameters(nDIP8ActivationHeight);
+}
+
+void CRegTestParams::UpdateMNPurgeParametersFromArgs(const ArgsManager& args)
+{
+    if (!args.IsArgSet("-mnpurgeparams")) return;
+
+    std::string strParams = args.GetArg("-mnpurgeparams", "");
+    std::vector<std::string> vParams;
+    boost::split(vParams, strParams, boost::is_any_of(":"));
+    if (vParams.size() != 2) {
+        throw std::runtime_error("Masternode purge parameters malformed, expecting <windowStart>:<purgeHeight>");
+    }
+    int nStartHeight, nPurgeHeight;
+    if (!ParseInt32(vParams[0], &nStartHeight)) {
+        throw std::runtime_error(strprintf("Invalid re-registration window start (%s)", vParams[0]));
+    }
+    if (!ParseInt32(vParams[1], &nPurgeHeight)) {
+        throw std::runtime_error(strprintf("Invalid purge height (%s)", vParams[1]));
+    }
+    LogPrintf("Setting masternode purge parameters to windowStart=%ld, purgeHeight=%ld\n", nStartHeight, nPurgeHeight);
+    UpdateMNPurgeParameters(nStartHeight, nPurgeHeight);
+}
+
+void CRegTestParams::UpdateLKSSmallQuorumHeightFromArgs(const ArgsManager& args)
+{
+    if (!args.IsArgSet("-lkssmallquorumheight")) return;
+
+    int nActivationHeight;
+    if (!ParseInt32(args.GetArg("-lkssmallquorumheight", ""), &nActivationHeight)) {
+        throw std::runtime_error("Invalid activation height for -lkssmallquorumheight");
+    }
+    LogPrintf("Setting LKS small quorum activation height to %ld\n", nActivationHeight);
+    UpdateLKSSmallQuorumHeight(nActivationHeight);
 }
 
 void CRegTestParams::UpdateBudgetParametersFromArgs(const ArgsManager& args)
