@@ -1,5 +1,5 @@
 // Copyright (c) 2009-2019 The Bitcoin Core developers
-// Copyright (c) 2014-2022 The Dash Core developers
+// Copyright (c) 2014-2022 The Lksc Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -349,7 +349,7 @@ static UniValue getaddednodeinfo(const JSONRPCRequest& request)
                             {
                                 {RPCResult::Type::OBJ, "", "",
                                 {
-                                    {RPCResult::Type::STR, "address", "The dash server IP and port we're connected to"},
+                                    {RPCResult::Type::STR, "address", "The lks server IP and port we're connected to"},
                                     {RPCResult::Type::STR, "connected", "connection, inbound or outbound"},
                                 }},
                             }},

@@ -58,7 +58,7 @@ OTOOL_CMD = os.getenv('OTOOL', '/usr/bin/otool')
 
 # Allowed NEEDED libraries
 ELF_ALLOWED_LIBRARIES = {
-# dashd and dash-qt
+# lksd and lks-qt
 'libgcc_s.so.1', # GCC base support
 'libc.so.6', # C library
 'libpthread.so.0', # threading
@@ -70,7 +70,7 @@ ELF_ALLOWED_LIBRARIES = {
 'ld-linux-aarch64.so.1', # 64-bit ARM dynamic linker
 'ld-linux-armhf.so.3', # 32-bit ARM dynamic linker
 'ld-linux-riscv64-lp64d.so.1', # 64-bit RISC-V dynamic linker
-# dash-qt only
+# lks-qt only
 'libxcb.so.1', # part of X11
 'libxkbcommon.so.0', # keyboard keymapping
 'libxkbcommon-x11.so.0', # keyboard keymapping

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2022 The Dash Core developers
+// Copyright (c) 2019-2022 The Lksc Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -172,10 +172,10 @@ static UniValue getcoinjoininfo(const JSONRPCRequest& request)
 static const CRPCCommand commands[] =
     { //  category              name                      actor (function)         argNames
         //  --------------------- ------------------------  ---------------------------------
-        { "dash",               "getpoolinfo",            &getpoolinfo,            {} },
-        { "dash",               "getcoinjoininfo",        &getcoinjoininfo,        {} },
+        { "lks",               "getpoolinfo",            &getpoolinfo,            {} },
+        { "lks",               "getcoinjoininfo",        &getcoinjoininfo,        {} },
 #ifdef ENABLE_WALLET
-        { "dash",               "coinjoin",               &coinjoin,               {} },
+        { "lks",               "coinjoin",               &coinjoin,               {} },
 #endif // ENABLE_WALLET
 };
 // clang-format on

@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2022 The Dash Core developers
+// Copyright (c) 2018-2022 The Lksc Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -44,7 +44,7 @@ static RPCArg GetRpcArg(const std::string& strParamName)
     static const std::map<std::string, RPCArg> mapParamHelp = {
         {"collateralAddress",
             {"collateralAddress", RPCArg::Type::STR, RPCArg::Optional::NO,
-                "The dash address to send the collateral to."}
+                "The lks address to send the collateral to."}
         },
         {"collateralHash",
             {"collateralHash", RPCArg::Type::STR, RPCArg::Optional::NO,
@@ -100,17 +100,17 @@ static RPCArg GetRpcArg(const std::string& strParamName)
         },
         {"ownerAddress",
             {"ownerAddress", RPCArg::Type::STR, RPCArg::Optional::NO,
-                "The dash address to use for payee updates and proposal voting.\n"
+                "The lks address to use for payee updates and proposal voting.\n"
                 "The corresponding private key does not have to be known by your wallet.\n"
                 "The address must be unused and must differ from the collateralAddress."}
         },
         {"payoutAddress_register",
             {"payoutAddress_register", RPCArg::Type::STR, RPCArg::Optional::NO,
-                "The dash address to use for masternode reward payments."}
+                "The lks address to use for masternode reward payments."}
         },
         {"payoutAddress_update",
             {"payoutAddress_update", RPCArg::Type::STR, RPCArg::Optional::NO,
-                "The dash address to use for masternode reward payments.\n"
+                "The lks address to use for masternode reward payments.\n"
                 "If set to an empty string, the currently active payout address is reused."}
         },
         {"proTxHash",
@@ -321,7 +321,7 @@ static std::string SignAndSendSpecialTx(const JSONRPCRequest& request, const CMu
 static void protx_register_fund_help(const JSONRPCRequest& request)
 {
     RPCHelpMan{"protx register_fund",
-        "\nCreates, funds and sends a ProTx to the network. The resulting transaction will move 1000 Dash\n"
+        "\nCreates, funds and sends a ProTx to the network. The resulting transaction will move 1000 Lks\n"
         "to the address specified by collateralAddress and will then function as the collateral of your\n"
         "masternode.\n"
         "A few of the limitations you see in the arguments are temporary and might be lifted after DIP3\n"
@@ -531,7 +531,7 @@ static UniValue protx_register(const JSONRPCRequest& request)
     if (!request.params[paramIdx + 6].isNull()) {
         fundDest = DecodeDestination(request.params[paramIdx + 6].get_str());
         if (!IsValidDestination(fundDest))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Dash address: ") + request.params[paramIdx + 6].get_str());
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Lks address: ") + request.params[paramIdx + 6].get_str());
     }
 
     FundSpecialTx(wallet.get(), tx, ptx, fundDest);
@@ -703,7 +703,7 @@ static UniValue protx_update_service(const JSONRPCRequest& request)
     if (!request.params[4].isNull()) {
         feeSource = DecodeDestination(request.params[4].get_str());
         if (!IsValidDestination(feeSource))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Dash address: ") + request.params[4].get_str());
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Lks address: ") + request.params[4].get_str());
     } else {
         if (ptx.scriptOperatorPayout != CScript()) {
             // use operator reward address as default source for fees
@@ -804,7 +804,7 @@ static UniValue protx_update_registrar(const JSONRPCRequest& request)
     if (!request.params[4].isNull()) {
         feeSourceDest = DecodeDestination(request.params[4].get_str());
         if (!IsValidDestination(feeSourceDest))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Dash address: ") + request.params[4].get_str());
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Lks address: ") + request.params[4].get_str());
     }
 
     FundSpecialTx(wallet.get(), tx, ptx, feeSourceDest);
@@ -876,7 +876,7 @@ static UniValue protx_revoke(const JSONRPCRequest& request)
     if (!request.params[3].isNull()) {
         CTxDestination feeSourceDest = DecodeDestination(request.params[3].get_str());
         if (!IsValidDestination(feeSourceDest))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Dash address: ") + request.params[3].get_str());
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Lks address: ") + request.params[3].get_str());
         FundSpecialTx(wallet.get(), tx, ptx, feeSourceDest);
     } else if (dmn->pdmnState->scriptOperatorPayout != CScript()) {
         // Using funds from previousely specified operator payout address

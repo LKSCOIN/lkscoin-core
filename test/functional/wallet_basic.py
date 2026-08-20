@@ -81,7 +81,7 @@ class WalletTest(BitcoinTestFramework):
         txout = self.nodes[0].gettxout(txid=confirmed_txid, n=confirmed_index, include_mempool=True)
         assert_equal(txout['value'], 500)
 
-        # Send 210 DASH from 0 to 2 using sendtoaddress call.
+        # Send 210 LKS from 0 to 2 using sendtoaddress call.
         # Second transaction will be child of first, and will require a fee
         self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 110)
         mempool_txid = self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 100)
@@ -141,7 +141,7 @@ class WalletTest(BitcoinTestFramework):
         self.nodes[1].generate(100)
         self.sync_all(self.nodes[0:3])
 
-        # node0 should end up with 1000 DASH in block rewards plus fees, but
+        # node0 should end up with 1000 LKS in block rewards plus fees, but
         # minus the 210 plus fees sent to node2
         assert_equal(self.nodes[0].getbalance(), 1000 - 210)
         assert_equal(self.nodes[2].getbalance(), 210)
@@ -180,7 +180,7 @@ class WalletTest(BitcoinTestFramework):
         spent_0 = {"txid": node0utxos[0]["txid"], "vout": node0utxos[0]["vout"]}
         assert_raises_rpc_error(-8, "Invalid parameter, expected unspent output", self.nodes[0].lockunspent, False, [spent_0])
 
-        # Send 100 DASH normal
+        # Send 100 LKS normal
         address = self.nodes[0].getnewaddress("test")
         fee_per_byte = Decimal('0.00001') / 1000
         self.nodes[2].settxfee(fee_per_byte * 1000)
@@ -190,7 +190,7 @@ class WalletTest(BitcoinTestFramework):
         node_2_bal = self.check_fee_amount(self.nodes[2].getbalance(), Decimal('900') - totalfee, fee_per_byte, count_bytes(self.nodes[2].gettransaction(txid)['hex']))
         assert_equal(self.nodes[0].getbalance(), Decimal('100'))
 
-        # Send 100 DASH with subtract fee from amount
+        # Send 100 LKS with subtract fee from amount
         txid = self.nodes[2].sendtoaddress(address, 100, "", "", True)
         self.nodes[2].generate(1)
         self.sync_all(self.nodes[0:3])
@@ -198,7 +198,7 @@ class WalletTest(BitcoinTestFramework):
         assert_equal(self.nodes[2].getbalance(), node_2_bal)
         node_0_bal = self.check_fee_amount(self.nodes[0].getbalance(), Decimal('200'), fee_per_byte, count_bytes(self.nodes[2].gettransaction(txid)['hex']))
 
-        # Sendmany 100 DASH
+        # Sendmany 100 LKS
         txid = self.nodes[2].sendmany('', {address: 100}, 0, False, "", [])
         self.nodes[2].generate(1)
         self.sync_all(self.nodes[0:3])
@@ -206,7 +206,7 @@ class WalletTest(BitcoinTestFramework):
         node_2_bal = self.check_fee_amount(self.nodes[2].getbalance(), node_2_bal - Decimal('100'), fee_per_byte, count_bytes(self.nodes[2].gettransaction(txid)['hex']))
         assert_equal(self.nodes[0].getbalance(), node_0_bal)
 
-        # Sendmany 100 DASH with subtract fee from amount
+        # Sendmany 100 LKS with subtract fee from amount
         txid = self.nodes[2].sendmany('', {address: 100}, 0, False, "", [address])
         self.nodes[2].generate(1)
         self.sync_all(self.nodes[0:3])
@@ -320,14 +320,14 @@ class WalletTest(BitcoinTestFramework):
         # This will raise an exception for attempting to dump the private key of an address you do not own
         assert_raises_rpc_error(-4, "Private key for address %s is not known" % temp_address, self.nodes[0].dumpprivkey, temp_address)
 
-        # This will raise an exception for attempting to get the private key of an invalid Dash address
-        assert_raises_rpc_error(-5, "Invalid Dash address", self.nodes[0].dumpprivkey, "invalid")
+        # This will raise an exception for attempting to get the private key of an invalid Lks address
+        assert_raises_rpc_error(-5, "Invalid Lks address", self.nodes[0].dumpprivkey, "invalid")
 
-        # This will raise an exception for attempting to set a label for an invalid Dash address
-        assert_raises_rpc_error(-5, "Invalid Dash address", self.nodes[0].setlabel, "invalid address", "label")
+        # This will raise an exception for attempting to set a label for an invalid Lks address
+        assert_raises_rpc_error(-5, "Invalid Lks address", self.nodes[0].setlabel, "invalid address", "label")
 
         # This will raise an exception for importing an invalid address
-        assert_raises_rpc_error(-5, "Invalid Dash address or script", self.nodes[0].importaddress, "invalid")
+        assert_raises_rpc_error(-5, "Invalid Lks address or script", self.nodes[0].importaddress, "invalid")
 
         # This will raise an exception for attempting to import a pubkey that isn't in hex
         assert_raises_rpc_error(-5, "Pubkey must be a hex string", self.nodes[0].importpubkey, "not hex")

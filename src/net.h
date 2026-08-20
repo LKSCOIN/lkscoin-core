@@ -1088,7 +1088,7 @@ public:
     };
 
     // in bitcoin: m_tx_relay == nullptr if we're not relaying transactions with this peer
-    // in dash: m_tx_relay should never be nullptr, use m_block_relay_only_peer == true instead
+    // in lks: m_tx_relay should never be nullptr, use m_block_relay_only_peer == true instead
     std::unique_ptr<TxRelay> m_tx_relay;
 
     // Used for headers announcements - unfiltered blocks to relay

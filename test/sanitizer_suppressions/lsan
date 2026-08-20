@@ -1,6 +1,6 @@
 # Suppress warnings about addCoin(...) leak in the CoinSelection benchmark
 leak:addCoin
-leak:bench_dash
+leak:bench_lks
 
 # Suppress warnings triggered in dependencies
 leak:libqminimal

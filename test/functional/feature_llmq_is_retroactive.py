@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2022 The Dash Core developers
+# Copyright (c) 2015-2022 The Lksc Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,15 +15,15 @@ and by having a higher relay fee on nodes 4 and 5.
 
 import time
 
-from test_framework.test_framework import DashTestFramework
+from test_framework.test_framework import LksTestFramework
 from test_framework.util import set_node_times
 
 
-class LLMQ_IS_RetroactiveSigning(DashTestFramework):
+class LLMQ_IS_RetroactiveSigning(LksTestFramework):
     def set_test_params(self):
         # -whitelist is needed to avoid the trickling logic on node0
-        self.set_dash_test_params(6, 5, [["-whitelist=127.0.0.1"], [], [], [], ["-minrelaytxfee=0.001"], ["-minrelaytxfee=0.001"]], fast_dip3_enforcement=True)
-        self.set_dash_llmq_test_params(5, 3)
+        self.set_lks_test_params(6, 5, [["-whitelist=127.0.0.1"], [], [], [], ["-minrelaytxfee=0.001"], ["-minrelaytxfee=0.001"]], fast_dip3_enforcement=True)
+        self.set_lks_llmq_test_params(5, 3)
 
     def run_test(self):
         self.activate_dip8()

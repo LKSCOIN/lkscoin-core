@@ -1,40 +1,40 @@
-Dash Core staging tree 18.0
+Lksc Core staging tree 18.0
 ===========================
 
 |CI|master|develop|
 |-|-|-|
-|Gitlab|[![Build Status](https://gitlab.com/dashpay/dash/badges/master/pipeline.svg)](https://gitlab.com/dashpay/dash/-/tree/master)|[![Build Status](https://gitlab.com/dashpay/dash/badges/develop/pipeline.svg)](https://gitlab.com/dashpay/dash/-/tree/develop)|
+|Gitlab|[![Build Status](https://gitlab.com/LKSCOIN/lkscoin-core/badges/master/pipeline.svg)](https://gitlab.com/LKSCOIN/lkscoin-core/-/tree/master)|[![Build Status](https://gitlab.com/LKSCOIN/lkscoin-core/badges/develop/pipeline.svg)](https://gitlab.com/LKSCOIN/lkscoin-core/-/tree/develop)|
 
-https://www.dash.org
+https://www.lksfoundation.org
 
 
-What is Dash?
+What is Lks?
 -------------
 
-Dash is an experimental digital currency that enables instant, private
-payments to anyone, anywhere in the world. Dash uses peer-to-peer technology
+Lks is an experimental digital currency that enables instant, private
+payments to anyone, anywhere in the world. Lks uses peer-to-peer technology
 to operate with no central authority: managing transactions and issuing money
-are carried out collectively by the network. Dash Core is the name of the open
+are carried out collectively by the network. Lksc Core is the name of the open
 source software which enables the use of this currency.
 
 Pre-Built Binary
 ----------------
 
 For more information, as well as an immediately usable, binary version of
-the Dash Core software, see https://www.dash.org/downloads/.
+the Lksc Core software, see https://www.lksfoundation.org/downloads/.
 
 License
 -------
 
-Dash Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+Lksc Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 
 Development Process
 -------------------
 
 The `master` branch is meant to be stable. Development is normally done in separate branches.
-[Tags](https://github.com/dashpay/dash/tags) are created to indicate new official,
-stable release versions of Dash Core.
+[Tags](https://github.com/LKSCOIN/lkscoin-core/tags) are created to indicate new official,
+stable release versions of Lksc Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md)
 and useful hints for developers can be found in [doc/developer-notes.md](doc/developer-notes.md).
@@ -71,7 +71,7 @@ Translations
 ------------
 
 Changes to translations as well as new translations can be submitted to
-[Dash Core's Transifex page](https://www.transifex.com/projects/p/dash/).
+[Lksc Core's Transifex page](https://www.transifex.com/projects/p/lks/).
 
 Translations are periodically pulled from Transifex and merged into the git repository. See the
 [translation process](doc/translation_process.md) for details on how this works.
@@ -79,4 +79,4 @@ Translations are periodically pulled from Transifex and merged into the git repo
 **Important**: We do not accept translation changes as GitHub pull requests because the next
 pull from Transifex would automatically overwrite them again.
 
-Translators should also follow the [forum](https://www.dash.org/forum/topic/dash-worldwide-collaboration.88/).
+Translators should also follow the [forum](https://www.lksfoundation.org/forum/topic/lks-worldwide-collaboration.88/).

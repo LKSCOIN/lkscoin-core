@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2022 The Dash Core developers
+# Copyright (c) 2015-2022 The Lksc Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,17 +12,17 @@ Checks intra quorum connections
 
 import time
 
-from test_framework.test_framework import DashTestFramework
+from test_framework.test_framework import LksTestFramework
 from test_framework.util import assert_greater_than_or_equal, Options, wait_until
 
 # Probes should age after this many seconds.
 # NOTE: mine_quorum() can bump mocktime quite often internally so make sure this number is high enough.
 MAX_AGE = 120 * Options.timeout_scale
 
-class LLMQConnections(DashTestFramework):
+class LLMQConnections(LksTestFramework):
     def set_test_params(self):
-        self.set_dash_test_params(15, 14, fast_dip3_enforcement=True)
-        self.set_dash_llmq_test_params(5, 3)
+        self.set_lks_test_params(15, 14, fast_dip3_enforcement=True)
+        self.set_lks_llmq_test_params(5, 3)
 
     def run_test(self):
         self.nodes[0].sporkupdate("SPORK_17_QUORUM_DKG_ENABLED", 0)

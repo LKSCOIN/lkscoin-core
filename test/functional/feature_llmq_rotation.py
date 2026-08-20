@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2022 The Dash Core developers
+# Copyright (c) 2015-2022 The Lksc Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,7 +11,7 @@ Checks LLMQs Quorum Rotation
 '''
 from io import BytesIO
 
-from test_framework.test_framework import DashTestFramework
+from test_framework.test_framework import LksTestFramework
 from test_framework.messages import CBlock, CBlockHeader, CCbTx, CMerkleBlock, FromHex, hash256, msg_getmnlistd, QuorumId
 from test_framework.mininode import P2PInterface
 from test_framework.util import (
@@ -49,10 +49,10 @@ class TestP2PConn(P2PInterface):
         self.wait_for_mnlistdiff()
         return self.last_mnlistdiff
 
-class LLMQQuorumRotationTest(DashTestFramework):
+class LLMQQuorumRotationTest(LksTestFramework):
     def set_test_params(self):
-        self.set_dash_test_params(9, 8, fast_dip3_enforcement=True)
-        self.set_dash_llmq_test_params(4, 4)
+        self.set_lks_test_params(9, 8, fast_dip3_enforcement=True)
+        self.set_lks_llmq_test_params(4, 4)
 
     def run_test(self):
         llmq_type=103

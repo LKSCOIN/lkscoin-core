@@ -1,37 +1,37 @@
-Dash Core
+Lksc Core
 ==========
 
-This is the official reference wallet for Dash digital currency and comprises the backbone of the Dash peer-to-peer network. You can [download Dash Core](https://www.dash.org/downloads/) or [build it yourself](#building) using the guides below.
+This is the official reference wallet for Lks digital currency and comprises the backbone of the Lks peer-to-peer network. You can [download Lksc Core](https://www.lksfoundation.org/downloads/) or [build it yourself](#building) using the guides below.
 
 Running
 ---------------------
-The following are some helpful notes on how to run Dash Core on your native platform.
+The following are some helpful notes on how to run Lksc Core on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/dash-qt` (GUI) or
-- `bin/dashd` (headless)
+- `bin/lks-qt` (GUI) or
+- `bin/lksd` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run dash-qt.exe.
+Unpack the files into a directory, and then run lks-qt.exe.
 
 ### macOS
 
-Drag Dash Core to your applications folder, and then run Dash Core.
+Drag Lksc Core to your applications folder, and then run Lksc Core.
 
 ### Need Help?
 
-* See the [Dash documentation](https://docs.dash.org)
+* See the [Lks documentation](https://docs.lksfoundation.org)
 for help and more information.
-* Ask for help on [Dash Discord](http://staydashy.com)
-* Ask for help on the [Dash Forum](https://dash.org/forum)
+* Ask for help on [Lks Discord](http://staylksy.com)
+* Ask for help on the [Lks Forum](https://lksfoundation.org/forum)
 
 Building
 ---------------------
-The following are developer notes on how to build Dash Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+The following are developer notes on how to build Lksc Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
 - [macOS Build Notes](build-osx.md)
 - [Unix Build Notes](build-unix.md)
@@ -42,7 +42,7 @@ The following are developer notes on how to build Dash Core on your native platf
 
 Development
 ---------------------
-The Dash Core repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+The Lksc Core repo's [root README](/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Productivity Notes](productivity.md)
@@ -60,15 +60,15 @@ The Dash Core repo's [root README](/README.md) contains relevant information on 
 - [Benchmarking](benchmarking.md)
 
 ### Resources
-* See the [Dash Developer Documentation](https://dashcore.readme.io/)
+* See the [Lks Developer Documentation](https://lkscore.readme.io/)
   for technical specifications and implementation details.
-* Discuss on the [Dash Forum](https://dash.org/forum), in the Development & Technical Discussion board.
-* Discuss on [Dash Discord](http://staydashy.com)
-* Discuss on [Dash Developers Discord](http://chat.dashdevs.org/)
+* Discuss on the [Lks Forum](https://lksfoundation.org/forum), in the Development & Technical Discussion board.
+* Discuss on [Lks Discord](http://staylksy.com)
+* Discuss on [Lks Developers Discord](http://chat.lksdevs.org/)
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)
-- [dash.conf Configuration File](dash-conf.md)
+- [lks.conf Configuration File](lks-conf.md)
 - [Files](files.md)
 - [Fuzz-testing](fuzzing.md)
 - [Reduce Memory](reduce-memory.md)
