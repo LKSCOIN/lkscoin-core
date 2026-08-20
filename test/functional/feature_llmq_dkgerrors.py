@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Lksc Core developers
+# Copyright (c) 2015-2022 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_framework import LksTestFramework
+from test_framework.test_framework import DashTestFramework
 
 '''
 feature_llmq_dkgerrors.py
@@ -12,14 +12,14 @@ Simulate and check DKG errors
 
 '''
 
-class LLMQDKGErrors(LksTestFramework):
+class LLMQDKGErrors(DashTestFramework):
     def set_test_params(self):
-        self.set_lks_test_params(4, 3, [["-whitelist=127.0.0.1"]] * 4, fast_dip3_enforcement=True)
+        self.set_dash_test_params(4, 3, [["-whitelist=127.0.0.1"]] * 4, fast_dip3_enforcement=True)
 
     def run_test(self):
         self.activate_dip8()
 
-        self.nodes[0].spork("SPORK_17_QUORUM_DKG_ENABLED", 0)
+        self.nodes[0].sporkupdate("SPORK_17_QUORUM_DKG_ENABLED", 0)
         self.wait_for_sporks_same()
 
         self.log.info("Mine one quorum without simulating any errors")
@@ -75,21 +75,21 @@ class LLMQDKGErrors(LksTestFramework):
         for m in q['members']:
             if m['proTxHash'] == proTxHash:
                 if expectedValid:
-                    assert(m['valid'])
+                    assert m['valid']
                 else:
-                    assert(not m['valid'])
+                    assert not m['valid']
             else:
-                assert(m['valid'])
+                assert m['valid']
 
     def heal_masternodes(self, blockCount):
         # We're not testing PoSe here, so lets heal the MNs :)
-        self.nodes[0].spork("SPORK_17_QUORUM_DKG_ENABLED", 4070908800)
+        self.nodes[0].sporkupdate("SPORK_17_QUORUM_DKG_ENABLED", 4070908800)
         self.wait_for_sporks_same()
         for i in range(blockCount):
             self.bump_mocktime(1)
             self.nodes[0].generate(1)
         self.sync_all()
-        self.nodes[0].spork("SPORK_17_QUORUM_DKG_ENABLED", 0)
+        self.nodes[0].sporkupdate("SPORK_17_QUORUM_DKG_ENABLED", 0)
         self.wait_for_sporks_same()
 
 

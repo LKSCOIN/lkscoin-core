@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2021 The Lksc Core developers
+// Copyright (c) 2014-2021 The Dash Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,8 +10,6 @@
 #include <exception>
 
 #include <cxxabi.h>
-
-#include <tinyformat.h>
 
 std::string DemangleSymbol(const std::string& name);
 

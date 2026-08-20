@@ -1,11 +1,11 @@
 Sample configuration files for:
 ```
-SystemD: lksd.service
-Upstart: lksd.conf
-OpenRC:  lksd.openrc
-         lksd.openrcconf
-CentOS:  lksd.init
-OS X:    org.lks.lksd.plist
+SystemD: dashd.service
+Upstart: dashd.conf
+OpenRC:  dashd.openrc
+         dashd.openrcconf
+CentOS:  dashd.init
+macOS:   org.dash.dashd.plist
 ```
 have been made available to assist packagers in creating node packages here.
 

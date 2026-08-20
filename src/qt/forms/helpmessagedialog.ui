@@ -129,7 +129,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../lks.qrc"/>
+  <include location="../dash.qrc"/>
  </resources>
  <connections>
   <connection>

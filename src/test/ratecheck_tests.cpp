@@ -1,8 +1,8 @@
-// Copyright (c) 2014-2020 The Lksc Core developers
+// Copyright (c) 2014-2022 The Dash Core developers
 
 #include <governance/governance.h>
 
-#include <test/test_lks.h>
+#include <test/util/setup_common.h>
 
 #include <boost/test/unit_test.hpp>
 

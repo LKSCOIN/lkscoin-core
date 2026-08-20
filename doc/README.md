@@ -1,57 +1,58 @@
-Lksc Core
+Dash Core
 ==========
 
-This is the official reference wallet for Lks digital currency and comprises the backbone of the Lks peer-to-peer network. You can [download Lksc Core](https://www.lksfoundation.org/downloads/) or [build it yourself](#building) using the guides below.
+This is the official reference wallet for Dash digital currency and comprises the backbone of the Dash peer-to-peer network. You can [download Dash Core](https://www.dash.org/downloads/) or [build it yourself](#building) using the guides below.
 
 Running
 ---------------------
-The following are some helpful notes on how to run Lks on your native platform.
+The following are some helpful notes on how to run Dash Core on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/lks-qt` (GUI) or
-- `bin/lksd` (headless)
+- `bin/dash-qt` (GUI) or
+- `bin/dashd` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run lks-qt.exe.
+Unpack the files into a directory, and then run dash-qt.exe.
 
-### OS X
+### macOS
 
-Drag Lks-Qt to your applications folder, and then run Lks-Qt.
+Drag Dash Core to your applications folder, and then run Dash Core.
 
 ### Need Help?
 
-* See the [Lks documentation](https://docs.lksfoundation.org)
+* See the [Dash documentation](https://docs.dash.org)
 for help and more information.
-* See the [Lks Developer Documentation](https://lks-docs.github.io/) 
-for technical specifications and implementation details.
-* Ask for help on [Lks Nation Discord](http://lkschat.org)
-* Ask for help on the [Lks Forum](https://lksfoundation.org/forum)
+* Ask for help on [Dash Discord](http://staydashy.com)
+* Ask for help on the [Dash Forum](https://dash.org/forum)
 
 Building
 ---------------------
-The following are developer notes on how to build Lksc Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+The following are developer notes on how to build Dash Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
-- [OS X Build Notes](build-osx.md)
+- [macOS Build Notes](build-osx.md)
 - [Unix Build Notes](build-unix.md)
 - [Windows Build Notes](build-windows.md)
 - [OpenBSD Build Notes](build-openbsd.md)
+- [NetBSD Build Notes](build-netbsd.md)
 - [Gitian Building Guide](gitian-building.md)
 
 Development
 ---------------------
-The Lksc Core repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+The Dash Core repo's [root README](/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
+- [Productivity Notes](productivity.md)
 - [Release Notes](release-notes.md)
 - [Release Process](release-process.md)
 - Source Code Documentation ***TODO***
 - [Translation Process](translation_process.md)
 - [Translation Strings Policy](translation_strings_policy.md)
 - [Travis CI](travis-ci.md)
+- [JSON-RPC Interface](JSON-RPC-interface.md)
 - [Unauthenticated REST Interface](REST-interface.md)
 - [Shared Libraries](shared-libraries.md)
 - [BIPS](bips.md)
@@ -59,20 +60,24 @@ The Lksc Core repo's [root README](/README.md) contains relevant information on 
 - [Benchmarking](benchmarking.md)
 
 ### Resources
-* Discuss on the [Lks Forum](https://lksfoundation.org/forum), in the Development & Technical Discussion board.
-* Discuss on [Lks Nation Discord](http://lkschat.org)
+* See the [Dash Developer Documentation](https://dashcore.readme.io/)
+  for technical specifications and implementation details.
+* Discuss on the [Dash Forum](https://dash.org/forum), in the Development & Technical Discussion board.
+* Discuss on [Dash Discord](http://staydashy.com)
+* Discuss on [Dash Developers Discord](http://chat.dashdevs.org/)
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)
+- [dash.conf Configuration File](dash-conf.md)
 - [Files](files.md)
 - [Fuzz-testing](fuzzing.md)
+- [Reduce Memory](reduce-memory.md)
 - [Reduce Traffic](reduce-traffic.md)
 - [Tor Support](tor.md)
 - [Init Scripts (systemd/upstart/openrc)](init.md)
 - [ZMQ](zmq.md)
+- [PSBT support](psbt.md)
 
 License
 ---------------------
 Distributed under the [MIT software license](/COPYING).
-This product includes software developed by the OpenSSL Project for use in the [OpenSSL Toolkit](https://www.openssl.org/). This product includes
-cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cryptsoft.com)), and UPnP software written by Thomas Bernard.

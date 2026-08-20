@@ -1,5 +1,5 @@
-Building Lks
+Building Dash
 =============
 
 See doc/build-*.md for instructions on building the various
-elements of the Lksc Core reference implementation of Lks.
+elements of the Dash Core reference implementation of Dash.

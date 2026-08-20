@@ -1,11 +1,15 @@
-// Copyright (c) 2019-2021 The Lksc Core developers
+// Copyright (c) 2019-2021 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_UNORDERED_LRU_CACHE_H
 #define BITCOIN_UNORDERED_LRU_CACHE_H
 
+#include <algorithm>
+#include <cassert>
+#include <cstdint>
 #include <unordered_map>
+#include <vector>
 
 template<typename Key, typename Value, typename Hasher, size_t MaxSize = 0, size_t TruncateThreshold = 0>
 class unordered_lru_cache
@@ -23,7 +27,7 @@ public:
         maxSize(_maxSize),
         truncateThreshold(_truncateThreshold == 0 ? _maxSize * 2 : _truncateThreshold)
     {
-        // either specify maxSize through template arguments or the contructor and fail otherwise
+        // either specify maxSize through template arguments or the constructor and fail otherwise
         assert(_maxSize != 0);
     }
 

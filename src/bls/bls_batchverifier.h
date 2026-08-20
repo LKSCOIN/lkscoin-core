@@ -1,9 +1,9 @@
-// Copyright (c) 2018-2020 The Lksc Core developers
+// Copyright (c) 2018-2022 The Dash Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef LKS_CRYPTO_BLS_BATCHVERIFIER_H
-#define LKS_CRYPTO_BLS_BATCHVERIFIER_H
+#ifndef DASH_CRYPTO_BLS_BATCHVERIFIER_H
+#define DASH_CRYPTO_BLS_BATCHVERIFIER_H
 
 #include <bls/bls.h>
 
@@ -21,9 +21,9 @@ private:
         CBLSPublicKey pubKey;
     };
 
-    typedef std::map<MessageId, Message> MessageMap;
-    typedef typename MessageMap::iterator MessageMapIterator;
-    typedef std::map<SourceId, std::vector<MessageMapIterator>> MessagesBySourceMap;
+    using MessageMap = std::map<MessageId, Message>;
+    using MessageMapIterator = typename MessageMap::iterator;
+    using MessagesBySourceMap = std::map<SourceId, std::vector<MessageMapIterator>>;
 
     bool secureVerification;
     bool perMessageFallback;
@@ -237,4 +237,4 @@ private:
     }
 };
 
-#endif //LKS_CRYPTO_BLS_BATCHVERIFIER_H
+#endif //DASH_CRYPTO_BLS_BATCHVERIFIER_H

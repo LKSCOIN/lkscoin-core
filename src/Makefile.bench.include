@@ -1,25 +1,29 @@
 # Copyright (c) 2015-2016 The Bitcoin Core developers
-# Copyright (c) 2014-2018 The Lksc Core developers
+# Copyright (c) 2014-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-bin_PROGRAMS += bench/bench_lks
+bin_PROGRAMS += bench/bench_dash
 BENCH_SRCDIR = bench
-BENCH_BINARY = bench/bench_lks$(EXEEXT)
+BENCH_BINARY = bench/bench_dash$(EXEEXT)
 
 RAW_BENCH_FILES = \
   bench/data/block813851.raw
 GENERATED_BENCH_FILES = $(RAW_BENCH_FILES:.raw=.raw.h)
 
-bench_bench_lks_SOURCES = \
+bench_bench_dash_SOURCES = \
   $(RAW_BENCH_FILES) \
-  bench/bench_lks.cpp \
+  bench/bench_bitcoin.cpp \
   bench/bench.cpp \
   bench/bench.h \
+  bench/block_assemble.cpp \
   bench/bls.cpp \
   bench/bls_dkg.cpp \
   bench/checkblock.cpp \
   bench/checkqueue.cpp \
+  bench/data.h \
+  bench/data.cpp \
+  bench/duplicate_inputs.cpp \
   bench/ecdsa.cpp \
   bench/examples.cpp \
   bench/rollingbloom.cpp \
@@ -28,48 +32,60 @@ bench_bench_lks_SOURCES = \
   bench/crypto_hash.cpp \
   bench/ccoins_caching.cpp \
   bench/gcs_filter.cpp \
+  bench/hashpadding.cpp \
   bench/merkle_root.cpp \
   bench/mempool_eviction.cpp \
+  bench/mempool_stress.cpp \
+  bench/nanobench.h \
+  bench/nanobench.cpp \
+  bench/rpc_mempool.cpp \
   bench/util_time.cpp \
   bench/base58.cpp \
+  bench/bech32.cpp \
   bench/lockedpool.cpp \
   bench/poly1305.cpp \
   bench/prevector.cpp \
-  bench/string_cast.cpp
+  bench/string_cast.cpp \
+  test/util.cpp \
+  test/util.h
 
-nodist_bench_bench_lks_SOURCES = $(GENERATED_BENCH_FILES)
+nodist_bench_bench_dash_SOURCES = $(GENERATED_BENCH_FILES)
 
-bench_bench_lks_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CLFAGS) $(EVENT_PTHREADS_CFLAGS) -I$(builddir)/bench/
-bench_bench_lks_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bench_bench_lks_LDADD = \
+bench_bench_dash_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CLFAGS) $(EVENT_PTHREADS_CFLAGS) -I$(builddir)/bench/
+bench_bench_dash_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bench_bench_dash_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
+  $(LIBTEST_UTIL) \
   $(LIBLEVELDB) \
   $(LIBLEVELDB_SSE42) \
   $(LIBMEMENV) \
   $(LIBSECP256K1) \
-  $(LIBUNIVALUE)
+  $(LIBUNIVALUE) \
+  $(EVENT_PTHREADS_LIBS) \
+  $(EVENT_LIBS)
 
 if ENABLE_ZMQ
-bench_bench_lks_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+bench_bench_dash_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
 endif
 
 if ENABLE_WALLET
-bench_bench_lks_SOURCES += bench/coin_selection.cpp
+bench_bench_dash_SOURCES += bench/coin_selection.cpp
+bench_bench_dash_SOURCES += bench/wallet_balance.cpp
 endif
 
-bench_bench_lks_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
-bench_bench_lks_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+bench_bench_dash_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(BDB_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(MINIUPNPC_LIBS) $(NATPMP_LIBS) $(BLS_LIBS) $(GMP_LIBS)
+bench_bench_dash_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 CLEAN_BITCOIN_BENCH = bench/*.gcda bench/*.gcno $(GENERATED_BENCH_FILES)
 
 CLEANFILES += $(CLEAN_BITCOIN_BENCH)
 
-bench/checkblock.cpp: bench/data/block813851.raw.h
+bench/data.cpp: bench/data/block813851.raw.h
 
 bitcoin_bench: $(BENCH_BINARY)
 
@@ -77,13 +93,13 @@ bench: $(BENCH_BINARY) FORCE
 	$(BENCH_BINARY)
 
 bitcoin_bench_clean : FORCE
-	rm -f $(CLEAN_BITCOIN_BENCH) $(bench_bench_lks_OBJECTS) $(BENCH_BINARY)
+	rm -f $(CLEAN_BITCOIN_BENCH) $(bench_bench_dash_OBJECTS) $(BENCH_BINARY)
 
 bench/data/%.raw.h: bench/data/%.raw
 	@$(MKDIR_P) $(@D)
 	@{ \
 	 echo "namespace raw_bench{" && \
-	 echo "static unsigned const char $(*F)[] = {" && \
+	 echo "static unsigned const char $(*F)_raw[] = {" && \
 	 $(HEXDUMP) -v -e '8/1 "0x%02x, "' -e '"\n"' $< | $(SED) -e 's/0x  ,//g' && \
 	 echo "};};"; \
 	} > "$@.new" && mv -f "$@.new" "$@"

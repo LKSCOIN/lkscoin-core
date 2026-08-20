@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2020-2021 The Lksc Core developers
+# Copyright (c) 2020-2022 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test that commands submitted by the platform user are filtered."""
@@ -16,10 +16,11 @@ import urllib.parse
 class HTTPBasicsTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 1
+        self.supports_cli = False
 
     def setup_chain(self):
         super().setup_chain()
-        # Append rpcauth to lks.conf before initialization
+        # Append rpcauth to dash.conf before initialization
         rpcauthplatform = "rpcauth=platform-user:dd88fd676186f48553775d6fb5a2d344$bc1f7898698ead19c6ec7ff47055622dd7101478f1ff6444103d3dc03cd77c13"
         # rpcuser : platform-user
         # rpcpassword : password123
@@ -29,7 +30,7 @@ class HTTPBasicsTest(BitcoinTestFramework):
 
         masternodeblskey="masternodeblsprivkey=58af6e39bb4d86b22bda1a02b134c2f5b71caffa1377540b02f7f1ad122f59e0"
 
-        with open(os.path.join(self.options.tmpdir+"/node0", "lks.conf"), 'a', encoding='utf8') as f:
+        with open(os.path.join(self.options.tmpdir+"/node0", "dash.conf"), 'a', encoding='utf8') as f:
             f.write(masternodeblskey+"\n")
             f.write(rpcauthplatform+"\n")
             f.write(rpcauthoperator+"\n")
@@ -47,7 +48,7 @@ class HTTPBasicsTest(BitcoinTestFramework):
             conn.request('POST', '/', json.dumps(body), {"Authorization": "Basic " + str_to_b64str(auth)})
             resp = conn.getresponse()
             if should_not_match:
-                assert(resp.status != expexted_status)
+                assert resp.status != expexted_status
             else:
                 assert_equal(resp.status, expexted_status)
             conn.close()
@@ -100,7 +101,7 @@ class HTTPBasicsTest(BitcoinTestFramework):
         self.log.info('Try running all non-whitelisted commands as each user...')
         for command in nonwhitelisted:
             test_command(command, [], rpcuser_authpair_platform, 403)
-            if command != "stop":  # avoid stoping the node while testing
+            if command != "stop":  # avoid stopping the node while testing
                 # we don't care about the exact status here, should simply be anything else but 403
                 test_command(command, [], rpcuser_authpair_operator, 403, True)
 

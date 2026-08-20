@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#
 # Copyright (c) 2017 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -7,14 +9,14 @@ export LC_ALL=C
 IF="eth0"
 #limit of the network interface in question
 LINKCEIL="1gbit"
-#limit outbound Lks protocol traffic to this rate
+#limit outbound Dash protocol traffic to this rate
 LIMIT="160kbit"
 #defines the IPv4 address space for which you wish to disable rate limiting
 LOCALNET_V4="192.168.0.0/16"
 #defines the IPv6 address space for which you wish to disable rate limiting
 LOCALNET_V6="fe80::/10"
 
-#delete existing rules
+#delete existing rules ('Error: Cannot delete qdisc with handle of zero.' means there weren't any.)
 tc qdisc del dev ${IF} root
 
 #add root class

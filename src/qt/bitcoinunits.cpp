@@ -1,11 +1,10 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2020 The Lksc Core developers
+// Copyright (c) 2014-2022 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/bitcoinunits.h>
 #include <chainparams.h>
-#include <primitives/transaction.h>
 
 #include <QSettings>
 #include <QStringList>
@@ -19,9 +18,9 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(LKS);
-    unitlist.append(mLKS);
-    unitlist.append(uLKS);
+    unitlist.append(DASH);
+    unitlist.append(mDASH);
+    unitlist.append(uDASH);
     unitlist.append(duffs);
     return unitlist;
 }
@@ -30,9 +29,9 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case LKS:
-    case mLKS:
-    case uLKS:
+    case DASH:
+    case mDASH:
+    case uDASH:
     case duffs:
         return true;
     default:
@@ -46,9 +45,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case LKS: return QString("LKS");
-            case mLKS: return QString("mLKS");
-            case uLKS: return QString::fromUtf8("μLKS");
+            case DASH: return QString("DASH");
+            case mDASH: return QString("mDASH");
+            case uDASH: return QString::fromUtf8("μDASH");
             case duffs: return QString("duffs");
             default: return QString("???");
         }
@@ -57,9 +56,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case LKS: return QString("tLKS");
-            case mLKS: return QString("mtLKS");
-            case uLKS: return QString::fromUtf8("μtLKS");
+            case DASH: return QString("tDASH");
+            case mDASH: return QString("mtDASH");
+            case uDASH: return QString::fromUtf8("μtDASH");
             case duffs: return QString("tduffs");
             default: return QString("???");
         }
@@ -72,10 +71,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case LKS: return QString("Lks");
-            case mLKS: return QString("Milli-Lks (1 / 1" THIN_SP_UTF8 "000)");
-            case uLKS: return QString("Micro-Lks (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-Lks (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case DASH: return QString("Dash");
+            case mDASH: return QString("Milli-Dash (1 / 1" THIN_SP_UTF8 "000)");
+            case uDASH: return QString("Micro-Dash (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case duffs: return QString("Ten Nano-Dash (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -83,10 +82,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case LKS: return QString("TestLkss");
-            case mLKS: return QString("Milli-TestLks (1 / 1" THIN_SP_UTF8 "000)");
-            case uLKS: return QString("Micro-TestLks (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-TestLks (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case DASH: return QString("TestDashs");
+            case mDASH: return QString("Milli-TestDash (1 / 1" THIN_SP_UTF8 "000)");
+            case uDASH: return QString("Micro-TestDash (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case duffs: return QString("Ten Nano-TestDash (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -96,9 +95,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case LKS:  return 100000000;
-    case mLKS: return 100000;
-    case uLKS: return 100;
+    case DASH:  return 100000000;
+    case mDASH: return 100000;
+    case uDASH: return 100;
     case duffs: return 1;
     default:   return 100000000;
     }
@@ -108,9 +107,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case LKS: return 8;
-    case mLKS: return 5;
-    case uLKS: return 2;
+    case DASH: return 8;
+    case mDASH: return 5;
+    case uDASH: return 2;
     case duffs: return 0;
     default: return 0;
     }
@@ -127,9 +126,7 @@ QString BitcoinUnits::format(int unit, const CAmount& nIn, bool fPlus, Separator
     int num_decimals = decimals(unit);
     qint64 n_abs = (n > 0 ? n : -n);
     qint64 quotient = n_abs / coin;
-    qint64 remainder = n_abs % coin;
     QString quotient_str = QString::number(quotient);
-    QString remainder_str = QString::number(remainder).rightJustified(num_decimals, '0');
 
     // Use SI-style thin space separators as these are locale independent and can't be
     // confused with the decimal marker.
@@ -144,10 +141,13 @@ QString BitcoinUnits::format(int unit, const CAmount& nIn, bool fPlus, Separator
     else if (fPlus && n > 0)
         quotient_str.insert(0, '+');
 
-    if (num_decimals <= 0)
+    if (num_decimals > 0) {
+        qint64 remainder = n_abs % coin;
+        QString remainder_str = QString::number(remainder).rightJustified(num_decimals, '0');
+        return quotient_str + QString(".") + remainder_str;
+    } else {
         return quotient_str;
-
-    return quotient_str + QString(".") + remainder_str;
+    }
 }
 
 
