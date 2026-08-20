@@ -649,7 +649,7 @@ bool CDeterministicMNManager::PurgeInactiveMNs(CDeterministicMNList& mnList, con
     const int nEnd = consensusParams.nMNPurgeHeight;   // exclusive: the purge block itself
 
     if (nStart <= 0 || nEnd <= nStart) {
-        return _state.DoS(100, false, REJECT_INVALID, "bad-mn-purge-params");
+        return _state.Invalid(ValidationInvalidReason::CONSENSUS, false, REJECT_INVALID, "bad-mn-purge-params");
     }
 
     // Collect every masternode that gave a proof of life inside the window, by
@@ -662,7 +662,7 @@ bool CDeterministicMNManager::PurgeInactiveMNs(CDeterministicMNList& mnList, con
     for (int h = nStart; h < nEnd; ++h) {
         const CBlockIndex* pindex = pindexPrev->GetAncestor(h);
         if (pindex == nullptr) {
-            return _state.DoS(100, false, REJECT_INVALID, "bad-mn-purge-missing-index");
+            return _state.Invalid(ValidationInvalidReason::CONSENSUS, false, REJECT_INVALID, "bad-mn-purge-missing-index");
         }
         CBlock blockWindow;
         if (!ReadBlockFromDisk(blockWindow, pindex, consensusParams)) {
@@ -707,9 +707,11 @@ bool CDeterministicMNManager::PurgeInactiveMNs(CDeterministicMNList& mnList, con
     }
 
     std::vector<uint256> vecToRemove;
-    mnList.ForEachMN(false, [&](const CDeterministicMNCPtr& dmn) {
-        if (setAlive.count(dmn->proTxHash) == 0) {
-            vecToRemove.emplace_back(dmn->proTxHash);
+    // Note: in 18.x ForEachMN hands the callback a dereferenced masternode,
+    // not the shared_ptr it used in 0.17.
+    mnList.ForEachMN(false, [&](const CDeterministicMN& dmn) {
+        if (setAlive.count(dmn.proTxHash) == 0) {
+            vecToRemove.emplace_back(dmn.proTxHash);
         }
     });
 
