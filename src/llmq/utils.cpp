@@ -927,6 +927,14 @@ bool IsQuorumTypeEnabledInternal(Consensus::LLMQType llmqType, const CQuorumMana
                 return false;
             }
             break;
+        case Consensus::LLMQType::LLMQ_LKS_10_60:
+            // LKSCOIN small quorums: enabled by height, so commitments for this
+            // type are invalid before the coordinated activation.
+            if (consensusParams.nLKSSmallQuorumHeight <= 0 || pindex == nullptr ||
+                pindex->nHeight < consensusParams.nLKSSmallQuorumHeight) {
+                return false;
+            }
+            break;
         default:
             throw std::runtime_error(strprintf("%s: Unknown LLMQ type %d", __func__, static_cast<uint8_t>(llmqType)));
     }

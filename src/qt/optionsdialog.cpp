@@ -110,14 +110,17 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     if (!enableWallet) {
         ui->stackedWidgetOptions->removeWidget(ui->pageWallet);
         ui->btnWallet->hide();
-        ui->stackedWidgetOptions->removeWidget(ui->pageCoinJoin);
-        ui->btnCoinJoin->hide();
         ui->thirdPartyTxUrlsLabel->setVisible(false);
         ui->thirdPartyTxUrls->setVisible(false);
     } else {
-        ui->btnCoinJoin->setText(QString::fromStdString(gCoinJoinName));
         pageButtons->addButton(ui->btnWallet, pageButtons->buttons().size());
-        pageButtons->addButton(ui->btnCoinJoin, pageButtons->buttons().size());
+    }
+    /* LKSCOIN: CoinJoin is not part of the feature set - never show its tab
+       nor its enable checkbox. */
+    ui->stackedWidgetOptions->removeWidget(ui->pageCoinJoin);
+    ui->btnCoinJoin->hide();
+    if (ui->coinJoinEnabled != nullptr) {
+        ui->coinJoinEnabled->hide();
     }
     pageButtons->addButton(ui->btnNetwork, pageButtons->buttons().size());
     pageButtons->addButton(ui->btnDisplay, pageButtons->buttons().size());

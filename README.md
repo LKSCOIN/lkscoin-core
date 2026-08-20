@@ -3,7 +3,7 @@ Lksc Core staging tree 18.0
 
 |CI|master|develop|
 |-|-|-|
-|Gitlab|[![Build Status](https://gitlab.com/LKSCOIN/lkscoin-core/badges/master/pipeline.svg)](https://gitlab.com/LKSCOIN/lkscoin-core/-/tree/master)|[![Build Status](https://gitlab.com/LKSCOIN/lkscoin-core/badges/develop/pipeline.svg)](https://gitlab.com/LKSCOIN/lkscoin-core/-/tree/develop)|
+|Gitlab|[![Build Status](https://gitlab.com/LKSCOIN/LKSCOIN/badges/master/pipeline.svg)](https://gitlab.com/LKSCOIN/LKSCOIN/-/tree/master)|[![Build Status](https://gitlab.com/LKSCOIN/LKSCOIN/badges/develop/pipeline.svg)](https://gitlab.com/LKSCOIN/LKSCOIN/-/tree/develop)|
 
 https://www.lksfoundation.org
 

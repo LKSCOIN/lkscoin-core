@@ -10,7 +10,7 @@
 #endif //HAVE_CONFIG_H
 
 // Check that required client information is defined
-#if !defined(CLIENT_VERSION_MAJOR) || !defined(CLIENT_VERSION_MINOR) || !defined(CLIENT_VERSION_BUILD) || !defined(CLIENT_VERSION_IS_RELEASE) || !defined(COPYRIGHT_YEAR)
+#if !defined(CLIENT_VERSION_MAJOR) || !defined(CLIENT_VERSION_MINOR) || !defined(CLIENT_VERSION_BUILD) || !defined(CLIENT_VERSION_LKS_PATCH) || !defined(CLIENT_VERSION_IS_RELEASE) || !defined(COPYRIGHT_YEAR)
 #error Client version information missing: version is not defined by bitcoin-config.h or in any other way
 #endif
 
@@ -35,10 +35,12 @@
 #include <string>
 #include <vector>
 
+// LKSCOIN uses a four-part version: <LKS major>.<Dash major>.<Dash minor>.<LKS patch>
 static const int CLIENT_VERSION =
-                             10000 * CLIENT_VERSION_MAJOR
-                         +     100 * CLIENT_VERSION_MINOR
-                         +       1 * CLIENT_VERSION_BUILD;
+                           1000000 * CLIENT_VERSION_MAJOR
+                         +   10000 * CLIENT_VERSION_MINOR
+                         +     100 * CLIENT_VERSION_BUILD
+                         +       1 * CLIENT_VERSION_LKS_PATCH;
 
 extern const std::string CLIENT_NAME;
 extern const std::string CLIENT_BUILD;

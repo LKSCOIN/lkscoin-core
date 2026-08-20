@@ -123,6 +123,29 @@ struct Params {
     LLMQType llmqTypeDIP0024InstantSend{LLMQType::LLMQ_NONE};
     LLMQType llmqTypePlatform{LLMQType::LLMQ_NONE};
     LLMQType llmqTypeMnhf{LLMQType::LLMQ_NONE};
+
+    /**
+     * LKSCOIN network revival parameters (all 0 = feature disabled).
+     *
+     * The LLMQ subsystem has produced no quorum since block ~571,680: with the
+     * overwhelming majority of registered masternodes long offline, the members
+     * drawn for a quorum are almost all unreachable and no DKG reaches its
+     * minimum size. Because PoSe penalties are applied by quorums, stale entries
+     * can never be evicted by the protocol itself - the state is self-sustaining.
+     *
+     *  - nMNPurgeStartHeight / nMNPurgeHeight define a public re-registration
+     *    window. A masternode publishing a ProRegTx, ProUpServTx, ProUpRegTx or
+     *    ProUpRevTx inside [start, purge) proves it is operated; at exactly
+     *    nMNPurgeHeight all other entries are removed. Collateral is NOT touched:
+     *    removed operators keep their coins and may re-register at any time.
+     *
+     *  - nLKSSmallQuorumHeight enables LLMQ_LKS_10_60 from that height on. Before
+     *    it, commitments for that type are rejected, so this is a coordinated
+     *    hard fork.
+     */
+    int nMNPurgeStartHeight{0};
+    int nMNPurgeHeight{0};
+    int nLKSSmallQuorumHeight{0};
 };
 } // namespace Consensus
 

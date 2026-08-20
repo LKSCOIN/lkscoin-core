@@ -21,6 +21,13 @@ enum class LLMQType : uint8_t {
     LLMQ_60_75 = 5,  // 60 members, 45 (75%) threshold, one every 12 hours
     LLMQ_25_67 = 6, // 25 members, 67 (67%) threshold, one per hour
 
+    // LKSCOIN-specific. Dash's smallest production quorum (50_60) needs 40 of the
+    // 50 drawn members to complete a DKG, unreachable on a network of a few dozen
+    // masternodes. Sized for the real LKSCOIN network; gated by
+    // nLKSSmallQuorumHeight. Values >= 10 are reserved for LKSCOIN types so they
+    // cannot collide with future upstream Dash types.
+    LLMQ_LKS_10_60 = 10, // 10 members, 6 (60%) threshold
+
     // for testing only
     LLMQ_TEST = 100, // 3 members, 2 (66%) threshold, one per hour. Params might differ when -llmqtestparams is used
 
@@ -112,7 +119,7 @@ static_assert(std::is_trivially_copyable_v<Consensus::LLMQParams>, "LLMQParams i
 static_assert(std::is_trivially_assignable_v<Consensus::LLMQParams, Consensus::LLMQParams>, "LLMQParams is not trivially assignable");
 
 
-static constexpr std::array<LLMQParams, 12> available_llmqs = {
+static constexpr std::array<LLMQParams, 13> available_llmqs = {
 
     /**
      * llmq_test
@@ -262,6 +269,35 @@ static constexpr std::array<LLMQParams, 12> available_llmqs = {
 
         .keepOldConnections = 4,
         .recoveryMembers = 4,
+    },
+
+    /**
+     * llmq_lks_10_60
+     * LKSCOIN bootstrap quorum: 7 - 10 participants.
+     *
+     * WARNING: a 6-of-10 threshold is a weak trust assumption - whoever operates
+     * 6 members can sign on their own. This is a bootstrap parameter to restart
+     * the LLMQ machinery on a network that has almost no live masternodes left,
+     * not a target: it must be raised (with a further coordinated fork) as soon
+     * as the number of independent operators allows it.
+     */
+    LLMQParams{
+        .type = LLMQType::LLMQ_LKS_10_60,
+        .name = "llmq_lks_10_60",
+        .useRotation = false,
+        .size = 10,
+        .minSize = 7,
+        .threshold = 6,
+
+        .dkgInterval = 24, // one DKG per hour at target block spacing
+        .dkgPhaseBlocks = 2,
+        .dkgMiningWindowStart = 10, // dkgPhaseBlocks * 5 = after finalization
+        .dkgMiningWindowEnd = 18,
+        .dkgBadVotesThreshold = 7,
+
+        .signingActiveQuorumCount = 24, // a full day worth of LLMQs
+        .keepOldConnections = 25,
+        .recoveryMembers = 6,
     },
 
     /**

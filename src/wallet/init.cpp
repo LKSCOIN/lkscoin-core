@@ -191,7 +191,9 @@ void WalletInit::AutoLockMasternodeCollaterals() const
 
 void WalletInit::InitCoinJoinSettings() const
 {
-    CCoinJoinClientOptions::SetEnabled(!GetWallets().empty() ? gArgs.GetBoolArg("-enablecoinjoin", true) : false);
+    // LKSCOIN: CoinJoin is not part of the feature set - the mixing client is
+    // hard-disabled regardless of -enablecoinjoin.
+    CCoinJoinClientOptions::SetEnabled(false);
     if (!CCoinJoinClientOptions::IsEnabled()) {
         return;
     }

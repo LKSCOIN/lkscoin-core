@@ -642,10 +642,99 @@ void CDeterministicMNManager::UpdatedBlockTip(const CBlockIndex* pindex)
     tipIndex = pindex;
 }
 
+bool CDeterministicMNManager::PurgeInactiveMNs(CDeterministicMNList& mnList, const CBlockIndex* pindexPrev, CValidationState& _state, bool debugLogs)
+{
+    const auto& consensusParams = Params().GetConsensus();
+    const int nStart = consensusParams.nMNPurgeStartHeight;
+    const int nEnd = consensusParams.nMNPurgeHeight;   // exclusive: the purge block itself
+
+    if (nStart <= 0 || nEnd <= nStart) {
+        return _state.DoS(100, false, REJECT_INVALID, "bad-mn-purge-params");
+    }
+
+    // Collect every masternode that gave a proof of life inside the window, by
+    // scanning the blocks of the window for provider special transactions. Any
+    // of ProRegTx / ProUpServTx / ProUpRegTx / ProUpRevTx counts: all of them
+    // are signed by a key only the operator or owner controls, so they cannot
+    // be forged on behalf of an absent operator.
+    std::set<uint256> setAlive;
+
+    for (int h = nStart; h < nEnd; ++h) {
+        const CBlockIndex* pindex = pindexPrev->GetAncestor(h);
+        if (pindex == nullptr) {
+            return _state.DoS(100, false, REJECT_INVALID, "bad-mn-purge-missing-index");
+        }
+        CBlock blockWindow;
+        if (!ReadBlockFromDisk(blockWindow, pindex, consensusParams)) {
+            // Not a consensus failure of the block being connected: the local
+            // node simply cannot read its own block files.
+            return error("%s: failed to read block %d from disk while purging masternodes", __func__, h);
+        }
+        for (const auto& ptx : blockWindow.vtx) {
+            if (ptx->nVersion != 3) {
+                continue;
+            }
+            switch (ptx->nType) {
+            case TRANSACTION_PROVIDER_REGISTER:
+                // A fresh registration inside the window is itself a proof of life.
+                setAlive.insert(ptx->GetHash());
+                break;
+            case TRANSACTION_PROVIDER_UPDATE_SERVICE: {
+                CProUpServTx payload;
+                if (GetTxPayload(*ptx, payload)) {
+                    setAlive.insert(payload.proTxHash);
+                }
+                break;
+            }
+            case TRANSACTION_PROVIDER_UPDATE_REGISTRAR: {
+                CProUpRegTx payload;
+                if (GetTxPayload(*ptx, payload)) {
+                    setAlive.insert(payload.proTxHash);
+                }
+                break;
+            }
+            case TRANSACTION_PROVIDER_UPDATE_REVOKE: {
+                CProUpRevTx payload;
+                if (GetTxPayload(*ptx, payload)) {
+                    setAlive.insert(payload.proTxHash);
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+    }
+
+    std::vector<uint256> vecToRemove;
+    mnList.ForEachMN(false, [&](const CDeterministicMNCPtr& dmn) {
+        if (setAlive.count(dmn->proTxHash) == 0) {
+            vecToRemove.emplace_back(dmn->proTxHash);
+        }
+    });
+
+    const int nBefore = mnList.GetAllMNsCount();
+    for (const auto& proTxHash : vecToRemove) {
+        mnList.RemoveMN(proTxHash);
+    }
+
+    LogPrintf("CDeterministicMNManager::%s -- masternode list purged at height %d: %d of %d entries removed, %d kept (re-registration window %d-%d)\n",
+              __func__, nEnd, (int)vecToRemove.size(), nBefore, mnList.GetAllMNsCount(), nStart, nEnd);
+
+    if (debugLogs) {
+        for (const auto& proTxHash : vecToRemove) {
+            LogPrintf("CDeterministicMNManager::%s -- removed %s (no proof of life in the window)\n", __func__, proTxHash.ToString());
+        }
+    }
+
+    return true;
+}
+
 bool CDeterministicMNManager::BuildNewListFromBlock(const CBlock& block, const CBlockIndex* pindexPrev, CValidationState& _state, const CCoinsViewCache& view, CDeterministicMNList& mnListRet, bool debugLogs)
 {
     AssertLockHeld(cs);
 
+    const auto& consensusParams = Params().GetConsensus();
     int nHeight = pindexPrev->nHeight + 1;
 
     CDeterministicMNList oldList = GetListForBlock(pindexPrev);
@@ -701,7 +790,7 @@ bool CDeterministicMNManager::BuildNewListFromBlock(const CBlock& block, const C
             }
 
             Coin coin;
-            if (!proTx.collateralOutpoint.hash.IsNull() && (!view.GetCoin(dmn->collateralOutpoint, coin) || coin.IsSpent() || coin.out.nValue != 1000 * COIN)) {
+            if (!proTx.collateralOutpoint.hash.IsNull() && (!view.GetCoin(dmn->collateralOutpoint, coin) || coin.IsSpent() || coin.out.nValue != 100000 * COIN)) {
                 // should actually never get to this point as CheckProRegTx should have handled this case.
                 // We do this additional check nevertheless to be 100% sure
                 return _state.Invalid(ValidationInvalidReason::CONSENSUS, false, REJECT_INVALID, "bad-protx-collateral");
@@ -866,6 +955,14 @@ bool CDeterministicMNManager::BuildNewListFromBlock(const CBlock& block, const C
 
     // The payee for the current block was determined by the previous block's list, but it might have disappeared in the
     // current block. We still pay that MN one last time, however.
+    // LKSCOIN: one-shot removal of masternodes that showed no proof of life
+    // during the announced re-registration window. See Consensus::Params.
+    if (consensusParams.nMNPurgeHeight > 0 && nHeight == consensusParams.nMNPurgeHeight) {
+        if (!PurgeInactiveMNs(newList, pindexPrev, _state, debugLogs)) {
+            return false;
+        }
+    }
+
     if (payee && newList.HasMN(payee->proTxHash)) {
         auto newState = std::make_shared<CDeterministicMNState>(*newList.GetMN(payee->proTxHash)->pdmnState);
         newState->nLastPaidHeight = nHeight;
@@ -1011,7 +1108,7 @@ bool CDeterministicMNManager::IsProTxWithCollateral(const CTransactionRef& tx, u
     if (proTx.collateralOutpoint.n >= tx->vout.size() || proTx.collateralOutpoint.n != n) {
         return false;
     }
-    if (tx->vout[n].nValue != 1000 * COIN) {
+    if (tx->vout[n].nValue != 100000 * COIN) {
         return false;
     }
     return true;
@@ -1271,7 +1368,7 @@ bool CheckProRegTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValid
 
     if (!ptx.collateralOutpoint.hash.IsNull()) {
         Coin coin;
-        if (!view.GetCoin(ptx.collateralOutpoint, coin) || coin.IsSpent() || coin.out.nValue != 1000 * COIN) {
+        if (!view.GetCoin(ptx.collateralOutpoint, coin) || coin.IsSpent() || coin.out.nValue != 100000 * COIN) {
             return state.Invalid(ValidationInvalidReason::TX_BAD_SPECIAL, false, REJECT_INVALID, "bad-protx-collateral");
         }
 
@@ -1291,7 +1388,7 @@ bool CheckProRegTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValid
         if (ptx.collateralOutpoint.n >= tx.vout.size()) {
             return state.Invalid(ValidationInvalidReason::TX_BAD_SPECIAL, false, REJECT_INVALID, "bad-protx-collateral-index");
         }
-        if (tx.vout[ptx.collateralOutpoint.n].nValue != 1000 * COIN) {
+        if (tx.vout[ptx.collateralOutpoint.n].nValue != 100000 * COIN) {
             return state.Invalid(ValidationInvalidReason::TX_BAD_SPECIAL, false, REJECT_INVALID, "bad-protx-collateral");
         }
 
