@@ -8,7 +8,7 @@
 
 #include <chainparams.h>
 #include <validation.h>
-#include <test/test_lks.h>
+#include <test/util/setup_common.h>
 
 #include <boost/test/unit_test.hpp>
 
