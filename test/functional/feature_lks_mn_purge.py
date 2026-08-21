@@ -77,10 +77,17 @@ class MasternodePurgeTest(LksTestFramework):
         survivors = all_protx[:2]
         doomed = all_protx[2:]
 
+        # The fee source must actually hold coins: fund one address and use it
+        # for every proof-of-life transaction.
+        fee_addr = node.getnewaddress()
+        node.sendtoaddress(fee_addr, 10)
+        node.generate(1)
+        self.sync_all()
+
         for mn in self.mninfo[:2]:
             node.protx('update_service', mn.proTxHash,
                        '127.0.0.1:%d' % p2p_port(mn.nodeIdx), mn.keyOperator,
-                       "", node.getnewaddress())
+                       "", fee_addr)
         node.generate(1)
         self.sync_all()
         self.log.info("Proof of life published by %s" % ", ".join(h[:8] for h in survivors))
@@ -124,7 +131,7 @@ class MasternodePurgeTest(LksTestFramework):
         node.protx('register', removed.collateral_txid, removed.collateral_vout,
                    '127.0.0.1:%d' % p2p_port(removed.nodeIdx), removed.ownerAddr,
                    removed.pubKeyOperator, removed.votingAddr, 0,
-                   removed.collateral_address, node.getnewaddress())
+                   removed.collateral_address, fee_addr)
         node.generate(1)
         self.sync_all()
         assert_equal(len(node.protx('list', 'valid')), len(survivors) + 1)
