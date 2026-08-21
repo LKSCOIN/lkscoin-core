@@ -84,6 +84,7 @@ BASE_SCRIPTS = [
     # Scripts that are run by default.
     # Longest test should go first, to favor running tests in parallel
     'feature_dip3_deterministicmns.py', # NOTE: needs lks_hash to pass
+    'feature_lks_mn_purge.py', # LKSCOIN: masternode purge (needs lks_hash to pass)
     'feature_llmq_data_recovery.py',
     'feature_fee_estimation.py',
     'wallet_hd.py',

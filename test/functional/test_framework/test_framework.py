@@ -809,7 +809,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         return self.config["components"].getboolean("ENABLE_ZMQ")
 
 
-MASTERNODE_COLLATERAL = 1000
+MASTERNODE_COLLATERAL = 100000  # LKSCOIN requires 100,000 LKS (Dash uses 1,000)
 
 
 class MasternodeInfo:
