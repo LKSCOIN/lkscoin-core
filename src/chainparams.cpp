@@ -664,11 +664,16 @@ public:
         m_assumed_chain_state_size = 0;
 
         UpdateDevnetSubsidyAndDiffParametersFromArgs(args);
-        genesis = CreateGenesisBlock(1496594050, 530659, 0x1e0ffff0, 1, 1000 * COIN);
+        // LKSCOIN: regtest and devnet keep upstream's genesis, whose nBits is the
+        // trivial 0x207fffff. LKSCOIN 3.x had copied the mainnet difficulty
+        // (0x1e0ffff0) into these local chains; with fPowNoRetargeting every block
+        // then costs ~1M hashes (~20s each), which makes the unit tests and any
+        // devnet rehearsal impractically slow. These chains are throwaway, so
+        // there is no compatibility reason to keep the LKSCOIN values here.
+        genesis = CreateGenesisBlock(1417713337, 1096447, 0x207fffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000002aaadf6458647d201d3d84469a8f2cfa9dc5a6b7025b5ad306a473fc681"));
-        assert(genesis.hashMerkleRoot == uint256S("0x0a6b4c0d069c0eb809e0ca6f0682dcb8619b3abe64f529fa60dd446843290e24"));
-
+        assert(consensus.hashGenesisBlock == uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"));
+        assert(genesis.hashMerkleRoot == uint256S("0xe0028eb9648db56b1ac77cf090b99048a8007e2bb64b68f092c03c7f56a662c7"));
         devnetGenesis = FindDevNetGenesisBlock(genesis, 50 * COIN);
         consensus.hashDevnetGenesisBlock = devnetGenesis.GetHash();
 
@@ -912,11 +917,16 @@ public:
         UpdateLKSSmallQuorumHeightFromArgs(args);
         UpdateBudgetParametersFromArgs(args);
 
-        genesis = CreateGenesisBlock(1496594050, 530659, 0x1e0ffff0, 1, 1000 * COIN); 
+        // LKSCOIN: regtest and devnet keep upstream's genesis, whose nBits is the
+        // trivial 0x207fffff. LKSCOIN 3.x had copied the mainnet difficulty
+        // (0x1e0ffff0) into these local chains; with fPowNoRetargeting every block
+        // then costs ~1M hashes (~20s each), which makes the unit tests and any
+        // devnet rehearsal impractically slow. These chains are throwaway, so
+        // there is no compatibility reason to keep the LKSCOIN values here.
+        genesis = CreateGenesisBlock(1417713337, 1096447, 0x207fffff, 1, 50 * COIN); 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000002aaadf6458647d201d3d84469a8f2cfa9dc5a6b7025b5ad306a473fc681")); 
-        assert(genesis.hashMerkleRoot == uint256S("0x0a6b4c0d069c0eb809e0ca6f0682dcb8619b3abe64f529fa60dd446843290e24")); 
-
+        assert(consensus.hashGenesisBlock == uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"));
+        assert(genesis.hashMerkleRoot == uint256S("0xe0028eb9648db56b1ac77cf090b99048a8007e2bb64b68f092c03c7f56a662c7"));
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
 
