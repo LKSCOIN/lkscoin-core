@@ -28,12 +28,14 @@ void Test(llmq::CQuorumManager& qman)
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeDIP0024InstantSend, qman, nullptr, false, false), false);
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeDIP0024InstantSend, qman, nullptr, true, false), true);
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeDIP0024InstantSend, qman, nullptr, true, true), true);
-    // LKSCOIN: ChainLocks use LLMQ_LKS_10_60, which is gated by
-    // nLKSSmallQuorumHeight and therefore disabled until a coordinated
-    // activation (and always disabled when called with a null block index).
-    // Upstream assumes its ChainLocks quorum type is unconditionally enabled.
-    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, false, false), false);
-    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, true, false), false);
+    // LKSCOIN: on mainnet ChainLocks use LLMQ_LKS_10_60, which is gated by
+    // nLKSSmallQuorumHeight and therefore inert until a coordinated activation;
+    // regtest still uses LLMQ_TEST, which is always enabled. Upstream assumes
+    // the ChainLocks quorum type is unconditionally enabled everywhere.
+    const bool fChainLocksTypeGated =
+        consensus_params.llmqTypeChainLocks == Consensus::LLMQType::LLMQ_LKS_10_60;
+    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, false, false), !fChainLocksTypeGated);
+    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, true, false), !fChainLocksTypeGated);
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypePlatform, qman, nullptr, true, false), Params().IsTestChain());
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypePlatform, qman, nullptr, true, true), Params().IsTestChain());
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypePlatform, qman, nullptr, true, true), Params().IsTestChain());

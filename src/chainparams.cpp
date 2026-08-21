@@ -981,7 +981,7 @@ public:
         AddLLMQ(Consensus::LLMQType::LLMQ_TEST_V17);
         AddLLMQ(Consensus::LLMQType::LLMQ_TEST_DIP0024);
         consensus.llmqTypeChainLocks = Consensus::LLMQType::LLMQ_TEST;
-        consensus.llmqTypeInstantSend = Consensus::LLMQType::LLMQ_TEST;
+        consensus.llmqTypeInstantSend = Consensus::LLMQType::LLMQ_TEST_INSTANTSEND;
         consensus.llmqTypeDIP0024InstantSend = Consensus::LLMQType::LLMQ_TEST_DIP0024;
         consensus.llmqTypePlatform = Consensus::LLMQType::LLMQ_TEST;
         consensus.llmqTypeMnhf = Consensus::LLMQType::LLMQ_TEST;
