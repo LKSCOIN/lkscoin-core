@@ -61,6 +61,10 @@ FUZZ_SUITE_LD_COMMON = \
  $(BACKTRACE_LIB)
 
 # test_lks binary #
+# LKSCOIN: test/block_reward_reallocation_tests.cpp is deliberately NOT built.
+# Block reward reallocation does not exist on LKSCOIN - GetMasternodePayment
+# returns a flat 80% and BRRHeight is INT_MAX - so that upstream test drives a
+# deployment that never activates and hangs instead of failing.
 BITCOIN_TESTS =\
   test/arith_uint256_tests.cpp \
   test/scriptnum10.h \
@@ -73,7 +77,6 @@ BITCOIN_TESTS =\
   test/bech32_tests.cpp \
   test/bip32_tests.cpp \
   test/bip39_tests.cpp \
-  test/block_reward_reallocation_tests.cpp \
   test/blockchain_tests.cpp \
   test/blockencodings_tests.cpp \
   test/blockfilter_tests.cpp \
