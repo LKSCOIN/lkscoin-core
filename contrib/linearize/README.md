@@ -1,7 +1,7 @@
 # Linearize
 Construct a linear, no-fork, best version of the Lks blockchain.
 
-## Step 0: Install lks_hash
+## Step 0: Install dash_hash
 
 https://github.com/LKSCOIN/lkscoin-core_hash
 

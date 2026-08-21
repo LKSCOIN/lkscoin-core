@@ -1,0 +1,12 @@
+build: do not rebrand external GitHub organisations
+
+The mechanical dash->lks replacement also renamed the 'dashpay' GitHub
+organisation to 'lkspay', which broke the bls-signatures download in
+depends/packages/bls-dash.mk:
+
+  https://github.com/lkspay/bls-signatures/archive -> 404
+
+bls-signatures is an external library maintained by Dash; its upstream
+coordinates must be preserved exactly like the library name itself
+(bls-dash, not bls-lks). Restore 'dashpay' everywhere, including the
+documentation links that point at upstream repositories.

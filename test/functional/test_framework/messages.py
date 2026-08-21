@@ -29,7 +29,7 @@ import time
 from test_framework.siphash import siphash256
 from test_framework.util import hex_str_to_bytes
 
-import lks_hash
+import dash_hash
 
 MIN_VERSION_SUPPORTED = 60001
 MY_VERSION = 70223  # ADDRV2_PROTO_VERSION
@@ -67,7 +67,7 @@ def hash256(s):
     return sha256(sha256(s))
 
 def lkshash(s):
-    return lks_hash.getPoWHash(s)
+    return dash_hash.getPoWHash(s)
 
 def ser_compact_size(l):
     r = b""

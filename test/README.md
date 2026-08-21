@@ -24,10 +24,10 @@ Before tests can be run locally, Lksc Core must be built.  See the [building ins
 
 #### Dependencies and prerequisites
 
-Many Lks specific tests require lks_hash. To install it:
+Many Lks specific tests require dash_hash. To install it:
 
-- Clone the repo `git clone https://github.com/LKSCOIN/lkscoin-core_hash`
-- Install lks_hash `cd lks_hash && python3 setup.py install`
+- Clone the repo `git clone https://github.com/dashpay/dash_hash`
+- Install dash_hash `cd dash_hash && python3 setup.py install`
 
 The ZMQ functional test requires a python ZMQ library. To install it:
 

@@ -1,6 +1,21 @@
 # LKSCOIN Core 5.18.2.1 — Porting Status (Step 2: rebase to Dash 18.2.2)
 
-**State:** Phase 1 (mechanical port) complete — NOT compiled yet, NOT release-ready.
+**State:** Phase 2 COMPLETE — builds and consensus parity proven.
+
+> **Full-sync validation result (2026-08-21)**
+> A 5.18.2.1 node re-validated the whole LKSCOIN mainnet from genesis with
+> `-assumevalid=0` and reached height **994969**; at height 994959 its block
+> hash was `000000001fecea56f4c776d40a4c883cdd0b43919a9f6ab06baddd99c491d9c3`,
+> **identical** to the production 4.17.3.2 node. Masternode list rebuilt
+> identically (702 registered / 503 enabled), same LLMQ sets, 34 peers -
+> proving 5.18 and 4.17 nodes interoperate. `dip0020` and `dip0024` both report
+> `defined`, and `llmq_lks_10_60` does not appear in `quorum list`: the dormant
+> switches hold. The golden-vector subsidy test passes.
+>
+> Note: `getblockchaininfo` reports the legacy `realloc` deployment as active
+> since height 420800. This is cosmetic: in 18.x that BIP9 deployment no longer
+> drives anything (reallocation is keyed off `BRRHeight`, set to INT_MAX here),
+> and `GetMasternodePayment` returns a flat 80% regardless.
 **Base:** clean `dashpay/dash` tag `v18.2.2`, rebranded + LKSCOIN delta re-applied.
 **Previous step:** 4.17.3.2 (Dash 0.17.0.3), in production since August 2026.
 
@@ -51,11 +66,17 @@ activates without an explicit decision and a coordinated fork:
 
 ## Open items before any release
 
-1. **First build.** This tree has never been compiled. Expect fixes — the 4.17
-   port needed several rounds. Build on Ubuntu 18.04 for distributable binaries
-   (glibc 2.27); check whether 18.2.2's `depends` still needs the GCC ≤ 10
-   constraint and the Boost glibc-2.34 patch that 0.17 required (its Boost is
-   newer, so it may not).
+1. ~~**First build.**~~ **DONE.** Builds on Ubuntu 22.04 with the system GCC:
+   18.2.2 needs neither the GCC ≤ 10 constraint nor the Boost glibc-2.34 patch
+   that 0.17 required. Distributable binaries still have to be built on Ubuntu
+   18.04 for glibc 2.27 compatibility.
+   Defects found and fixed during the first build: the `randomizer.cpp` include,
+   `CValidationState::DoS()` → `Invalid(ValidationInvalidReason::CONSENSUS,…)`,
+   `ForEachMN` now passing a dereferenced masternode, the test fixture header
+   move, the dead Boost URL, the missing `src/config/.empty`, `dashpay` being
+   rebranded to `lkspay` (breaking the bls-signatures download), the LKSCOIN DNS
+   seeds never ported, and six `Update*` helpers whose bodies had been
+   overwritten by the automated parameter port.
 2. ~~**Version scheme.**~~ **RESOLVED:** the four-part LKSCOIN scheme is kept —
    `<LKS major>.<Dash major>.<Dash minor>.<LKS patch>`, so this release is
    **5.18.2.1**. Dash 18 had dropped the fourth component and changed the
@@ -67,13 +88,21 @@ activates without an explicit decision and a coordinated fork:
    `clientversion.h/.cpp` and the five Windows resource files. This is a
    deliberate local divergence from upstream: expect a small conflict on these
    files at every future Dash merge.
-3. **Consensus parity test.** Full sync from genesis with `-assumevalid=0`,
-   comparing the tip hash against a 4.17 node — the test that caught the two
-   real defects last time.
-4. **Protocol version.** 18.2.2 raises `PROTOCOL_VERSION` and
-   `MIN_PEER_PROTO_VERSION`: verify that 4.17 peers (70219) are still accepted,
-   otherwise the network splits into two non-communicating groups during rollout.
-5. **Devnet.** Exercise the full LLMQ path with the new quorum type before
-   considering any activation height.
+3. ~~**Consensus parity test.**~~ **PASSED** — see the box at the top.
+4. ~~**Protocol version.**~~ **CHECKED.** 5.18.2.1 speaks protocol 70224 and
+   accepts peers from 70215, so 4.17 nodes (70219) remain fully compatible - the
+   34 peers observed during the sync confirm it in practice.
+   **However `MIN_MASTERNODE_PROTO_VERSION` is 70221**, above 4.17's 70219, and
+   it is used in `llmq/dkgsession.cpp`: a masternode still on 4.17 would be
+   treated as a non-participant in a DKG run by 5.18 nodes and would collect bad
+   votes, leading to PoSe penalties. Harmless today (no DKG completes), but it
+   means **every masternode must be upgraded before the quorums are switched
+   back on** - the re-registration window has to close before the small-quorum
+   activation height, not after.
+5. **Regtest/devnet rehearsal — the real remaining gap.** `PurgeInactiveMNs()`
+   and `LLMQ_LKS_10_60` compile but **have never been executed**: on every real
+   network they are switched off. `-mnpurgeparams=<start>:<purge>` and
+   `-lkssmallquorumheight=<height>` were added (regtest-only) so the whole cycle
+   can be rehearsed without recompiling.
 6. **Remaining GUI/RPC review.** Minor cosmetic deltas from 3.3.0.0 were never
    ported and remain to be reviewed side by side.

@@ -1,0 +1,8 @@
+0000000000000000000000000000000000000000 ce6cb4b615a3ba390f2c9f2614468f8afb37a5e2 vibrant-trusting-ritchie <vibrant-trusting-ritchie@claude.(none)> 1787238367 +0200	clone: from https://github.com/LKSCOIN/lkscoin-core.git
+ce6cb4b615a3ba390f2c9f2614468f8afb37a5e2 ce6cb4b615a3ba390f2c9f2614468f8afb37a5e2 LKS Foundation <info.marcominin@gmail.com> 1787238368 +0200	checkout: moving from master to dash-18
+ce6cb4b615a3ba390f2c9f2614468f8afb37a5e2 1052588e86437308add6f46b1cde82d011acaa8b LKS Foundation <info.marcominin@gmail.com> 1787238380 +0200	commit: Import Dash Core v18.2.2
+1052588e86437308add6f46b1cde82d011acaa8b c10b5d126f09870717c326d4aa5938e814082d1d LKS Foundation <info.marcominin@gmail.com> 1787238394 +0200	commit: rebrand: dash -> lks (mechanical, no behavior change)
+c10b5d126f09870717c326d4aa5938e814082d1d 7a79b5290d705287a42d1325e2f50c9909640834 LKS Foundation <info.marcominin@gmail.com> 1787238429 +0200	commit: port LKSCOIN delta onto Dash 18.2.2; version 5.18.2.1
+7a79b5290d705287a42d1325e2f50c9909640834 fc598023fe66c78a282b0088d8e326d5671da98c LKS Foundation <info.marcominin@gmail.com> 1787239715 +0200	commit: build: restore src/config/.empty and fix the dead Boost download URL
+fc598023fe66c78a282b0088d8e326d5671da98c f537e85fddc9280875d3652374a88b8a37dc9a11 LKS Foundation <info.marcominin@gmail.com> 1787241004 +0200	commit: build: do not rebrand external GitHub organisations
+f537e85fddc9280875d3652374a88b8a37dc9a11 f537e85fddc9280875d3652374a88b8a37dc9a11 LKS Foundation <info.marcominin@gmail.com> 1787241041 +0200	checkout: moving from dash-18 to dash-18
