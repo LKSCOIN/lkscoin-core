@@ -729,7 +729,12 @@ public:
         nPoolMaxParticipants = 20;
         nFulfilledRequestExpireTime = 5*60; // fulfilled requests expire in 5 minutes
 
-        vSporkAddresses = {"yXweRfwWMV9Vciv6aD6agURwg5u8tEy7qQ"};
+        // LKSCOIN: regtest and devnet keep upstream's spork address, because the
+        // functional test framework signs sporks with the well-known regtest
+        // spork private key. Carrying the LKSCOIN address over here makes every
+        // masternode functional test fail at startup with
+        // "New private key does not belong to spork addresses".
+        vSporkAddresses = {"yjPtiKh2uwk3bDutTEA2q9mCtXyiZRWn55"};
         nMinSporkKeys = 1;
         // devnets are started with no blocks and no MN, so we can't check for upgraded MN (as there are none)
         fBIP9CheckMasternodesUpgraded = false;
@@ -944,7 +949,12 @@ public:
         nPoolMaxParticipants = 20;
 
         
-        vSporkAddresses = {"yjM9Vz8RRzZHbUdCRUVT6sehdRhgbjhNfJ"}; 
+        // LKSCOIN: regtest and devnet keep upstream's spork address, because the
+        // functional test framework signs sporks with the well-known regtest
+        // spork private key. Carrying the LKSCOIN address over here makes every
+        // masternode functional test fail at startup with
+        // "New private key does not belong to spork addresses".
+        vSporkAddresses = {"yj949n1UH6fDhw6HtVE5VMj2iSTaSWBMcW"}; 
         nMinSporkKeys = 1;
         // regtest usually has no masternodes in most tests, so don't check for upgraged MNs
         fBIP9CheckMasternodesUpgraded = false;
