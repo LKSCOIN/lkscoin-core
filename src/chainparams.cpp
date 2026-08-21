@@ -672,9 +672,8 @@ public:
         // there is no compatibility reason to keep the LKSCOIN values here.
         genesis = CreateGenesisBlock(1496594050, 530659, 0x207fffff, 1, 1000 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        // TODO(genesis): re-enable with the value printed by `lks-cli -regtest getblockhash 0`
-        // assert(consensus.hashGenesisBlock == uint256S("..."));
-        // assert(genesis.hashMerkleRoot == uint256S("..."));
+        assert(consensus.hashGenesisBlock == uint256S("0x4879209f1eacaad53822a90868e0f2a4def61ff21a8add5fd52363ff6fb5636f"));
+        assert(genesis.hashMerkleRoot == uint256S("0x0a6b4c0d069c0eb809e0ca6f0682dcb8619b3abe64f529fa60dd446843290e24"));
         devnetGenesis = FindDevNetGenesisBlock(genesis, 50 * COIN);
         consensus.hashDevnetGenesisBlock = devnetGenesis.GetHash();
 
@@ -926,9 +925,8 @@ public:
         // there is no compatibility reason to keep the LKSCOIN values here.
         genesis = CreateGenesisBlock(1496594050, 530659, 0x207fffff, 1, 1000 * COIN); 
         consensus.hashGenesisBlock = genesis.GetHash();
-        // TODO(genesis): re-enable with the value printed by `lks-cli -regtest getblockhash 0`
-        // assert(consensus.hashGenesisBlock == uint256S("..."));
-        // assert(genesis.hashMerkleRoot == uint256S("..."));
+        assert(consensus.hashGenesisBlock == uint256S("0x4879209f1eacaad53822a90868e0f2a4def61ff21a8add5fd52363ff6fb5636f"));
+        assert(genesis.hashMerkleRoot == uint256S("0x0a6b4c0d069c0eb809e0ca6f0682dcb8619b3abe64f529fa60dd446843290e24"));
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
 
