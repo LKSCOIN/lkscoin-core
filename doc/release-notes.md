@@ -1,171 +1,131 @@
-Lksc Core version v18.2.2
-=========================
+# LKSCOIN Core 5.18.2.1 Release Notes
 
-Release is now available from:
+LKSCOIN Core 5.18.2.1 rebases the codebase onto **Dash Core 18.2.2**, two
+upstream lines ahead of 4.17.3.2 (Dash 0.17.0.3), which has been in production
+since August 2026. It carries the accumulated upstream work — networking, wallet,
+RPC, performance and the associated Bitcoin Core backports — and adds the
+groundwork for the network revival described in
+[`network-revival-plan.md`](network-revival-plan.md).
 
-  <https://www.lksfoundation.org/downloads/#wallets>
+**This release changes no consensus rules and activates no hard fork.**
+It is a drop-in replacement for 4.17.3.x: new and old nodes interoperate, so
+operators can upgrade at their own pace.
 
-This is a new hotfix version release.
+Report issues at <https://github.com/LKSCOIN/lkscoin-core/issues>.
 
-This release is optional for all nodes; however, v18.2.2 or higher is required
-to be able to use testnet right until v19 hard fork activation. Earlier
-versions will not be able to sync past block 847000 on testnet.
+## Upgrading
 
-Please report bugs using the issue tracker at GitHub:
+Stop the daemon, install the new binaries, start it again. **No reindex is
+required** and the existing data directory is used as-is.
 
-  <https://github.com/LKSCOIN/lkscoin-core/issues>
+```bash
+lks-cli stop && sleep 15
+sudo dpkg -i LKSCoinCore_5.18.2.1.deb
+lksd -daemon
+```
 
+With systemd (typical masternode setup):
 
-Upgrading and downgrading
-=========================
+```bash
+systemctl stop lksd
+dpkg -i LKSCoinCore_5.18.2.1.deb
+systemctl start lksd
+```
 
-How to Upgrade
---------------
+Then confirm the **running** daemon, not just the installed file — a running
+process keeps executing the old binary image after the file has been replaced,
+and some setups restart `lksd` automatically:
 
-If you are running an older version, shut it down. Wait until it has completely
-shut down (which might take a few minutes for older versions), then run the
-installer (on Windows) or just copy over /Applications/Lks-Qt (on Mac) or
-lksd/lks-qt (on Linux). If you upgrade after DIP0003 activation and you were
-using version < 0.13 you will have to reindex (start with -reindex-chainstate
-or -reindex) to make sure your wallet has all the new data synced. Upgrading
-from version 0.13 should not require any additional actions.
+```bash
+lks-cli getnetworkinfo | grep subversion     # /Lksc Core:5.18.2.1/
+```
 
-When upgrading from a version prior to 18.0.1, the
-first startup of Lksc Core will run a migration process which can take anywhere
-from a few minutes to thirty minutes to finish. After the migration, a
-downgrade to an older version is only possible with a reindex
-(or reindex-chainstate).
+### Masternodes
 
-Downgrade warning
------------------
+No re-registration and no configuration change: same `lks.conf`, same BLS
+operator key, same ProTx, same collateral. After restarting, verify:
 
-### Downgrade to a version < v18.2.2
+```bash
+lks-cli masternode status                    # state: READY, PoSePenalty: 0
+lks-cli mnsync status | grep AssetName       # MASTERNODE_SYNC_FINISHED
+```
 
-Downgrading to a version older than v18.2.2 is supported.
+**Please upgrade.** Masternodes are compatible with 4.17 peers today because no
+quorum is forming, but 18.x requires protocol 70221 or later for DKG
+participation, and 4.17 speaks 70219. When the quorums are switched back on, a
+masternode left on 4.17 would be treated as a non-participant and would collect
+PoSe penalties. Every masternode must be on 5.18.x before that happens.
 
-### Downgrade to a version < v18.0.1
+### Downgrading
 
-Downgrading to a version older than v18.0.1 is not supported due to changes in
-the indexes database folder. If you need to use an older version, you must
-either reindex or re-sync the whole chain.
+Supported: the data directory format is unchanged and no irreversible database
+upgrade is performed. Reinstall the previous package and restart.
 
-Notable changes
-===============
+## Notable changes
 
-Testnet Breaking Changes
-------------------------
+**Rebase onto Dash Core 18.2.2.** Protocol version is now 70224 (was 70219);
+`MIN_PEER_PROTO_VERSION` is 70215, so 4.17 peers are still accepted.
 
-A new testnet only LLMQ has been added. This LLMQ is of the type LLMQ_25_67; this LLMQ is only active on testnet.
-This LLMQ will not remove the LLMQ_100_67 from testnet; however that quorum (likely) will not form and will perform no role.
-See the [diff](https://github.com/LKSCOIN/lkscoin-core/pull/5225/files#diff-e70a38a3e8c2a63ca0494627301a5c7042141ad301193f78338d97cb1b300ff9R451-R469) for specific parameters of the LLMQ.
+**Groundwork for the network revival, dormant by default.** Two mechanisms are
+present but switched off, and neither activates without an explicit decision and
+a coordinated fork:
 
-This LLMQ will become active at the height of 847000. **This will be a breaking change and a hard fork for testnet**
-This LLMQ is not activated with the v19 hardfork; as such testnet will experience two hardforks. One at height 847000,
-and the other to be determined by the BIP9 hard fork process.
+- `LLMQ_LKS_10_60`, a quorum type (10 members, minimum 7, threshold 6) sized for
+  the surviving LKSCOIN network, gated by `nLKSSmallQuorumHeight`. ChainLocks are
+  assigned to it instead of `LLMQ_400_60`, whose DKG would need 300 participants.
+- A masternode purge: at `nMNPurgeHeight`, entries that published no provider
+  special transaction during an announced re-registration window are removed from
+  the deterministic list. **Collateral is never touched** and removed operators
+  can register again at any time.
 
-Remote Procedure Call (RPC) Changes
------------------------------------
+Both are inert in this release (`nMNPurgeStartHeight`, `nMNPurgeHeight` and
+`nLKSSmallQuorumHeight` are all 0). Rationale and the measurements behind them
+are in [`network-revival-plan.md`](network-revival-plan.md).
 
-### The new RPCs are:
-None
+**Upstream features deliberately not scheduled.** DIP0024 (quorum rotation) has
+its activation window pushed out and `BRRHeight` is set to `INT_MAX`: LKSCOIN
+keeps its flat 80% masternode payment and does not adopt Dash's block reward
+reallocation.
 
-### The removed RPCs are:
-None
+**CoinJoin remains disabled** at every level: mixing client, GUI tab and
+checkbox, the masternode-side mixing server, and the RPC.
 
-### Changes in existing RPCs introduced through bitcoin backports:
-None
+**Testing infrastructure fixed.** The functional test framework could not run any
+masternode test on LKSCOIN: it used Dash's 1,000 collateral, Dash's genesis
+timestamp and Dash's regtest spork address, and the regtest chain had inherited
+mainnet difficulty bits (~20 s per block). All corrected, and a new functional
+test, `feature_lks_mn_purge.py`, exercises the purge end to end.
 
-### Lks-specific changes in existing RPCs:
-None
+## Verification
 
-Please check `help <command>` for more detailed information on specific RPCs.
+The release was validated the same way as 4.17.3.2:
 
-Command-line options
---------------------
-None
+- **Consensus parity.** A 5.18.2.1 node re-validated the entire chain from
+  genesis with `-assumevalid=0` — every signature and special transaction
+  re-checked — reaching height 994969. At height 994959 its block hash was
+  `000000001fecea56f4c776d40a4c883cdd0b43919a9f6ab06baddd99c491d9c3`,
+  **identical** to the production 4.17.3.2 node.
+- **Network state.** The deterministic masternode list was rebuilt identically
+  (702 registered, 503 enabled) and the LLMQ sets match.
+- **Interoperability.** The syncing node held 34 peers, a mix of 4.17 and 5.18.
+- **Unit and functional tests** pass, including the golden-vector subsidy test
+  and the new masternode purge test.
 
-Please check `Help -> Command-line options` in Qt wallet or `lksd --help` for
-more information.
+## Known issues
 
-Backports from Bitcoin Core
----------------------------
-None
+- The LKSCOIN network currently produces no quorums, so ChainLocks and
+  InstantSend are unavailable. This predates the release and is the subject of
+  the revival plan.
+- `getblockchaininfo` reports the legacy `realloc` deployment as active since
+  height 420800. This is cosmetic: in 18.x that deployment drives nothing, and
+  the masternode payment is a flat 80% regardless.
+- The LKSCOIN testnet is not operating; its parameters are carried over but its
+  fixed seed list is empty.
+- The GUI wallet is provided for Windows only.
+- The activation path of `LLMQ_LKS_10_60` has not yet been rehearsed end to end
+  (the purge has). It stays dormant in this release.
 
-Other changes
--------------
-#5247 is backported to improve debugging experience.
+## Credits
 
-v18.2.2 Change log
-==================
-
-See detailed [set of changes](https://github.com/LKSCOIN/lkscoin-core/compare/v18.2.1...dashpay:v18.2.2).
-
-Credits
-=======
-
-Thanks to everyone who directly contributed to this release:
-
-- Odysseas Gabrielides
-- UdjinM6
-
-As well as everyone that submitted issues, reviewed pull requests, helped debug the release candidates, and write DIPs that were implemented in this release.
-
-Older releases
-==============
-
-Lks was previously known as Darkcoin.
-
-Darkcoin tree 0.8.x was a fork of Litecoin tree 0.8, original name was XCoin
-which was first released on Jan/18/2014.
-
-Darkcoin tree 0.9.x was the open source implementation of masternodes based on
-the 0.8.x tree and was first released on Mar/13/2014.
-
-Darkcoin tree 0.10.x used to be the closed source implementation of Darksend
-which was released open source on Sep/25/2014.
-
-Lksc Core tree 0.11.x was a fork of Bitcoin Core tree 0.9,
-Darkcoin was rebranded to Lks.
-
-Lksc Core tree 0.12.0.x was a fork of Bitcoin Core tree 0.10.
-
-Lksc Core tree 0.12.1.x was a fork of Bitcoin Core tree 0.12.
-
-These release are considered obsolete. Old release notes can be found here:
-
-- [v18.2.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-18.2.2.md) released Jan/17/2023
-- [v18.2.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-18.2.0.md) released Jan/01/2023
-- [v18.1.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-18.1.1.md) released January/08/2023
-- [v18.1.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-18.1.0.md) released October/09/2022
-- [v18.0.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-18.0.2.md) released October/09/2022
-- [v18.0.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-18.0.1.md) released August/17/2022
-- [v0.17.0.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.17.0.3.md) released June/07/2021
-- [v0.17.0.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.17.0.2.md) released May/19/2021
-- [v0.16.1.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.16.1.1.md) released November/17/2020
-- [v0.16.1.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.16.1.0.md) released November/14/2020
-- [v0.16.0.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.16.0.1.md) released September/30/2020
-- [v0.15.0.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.15.0.0.md) released Febrary/18/2020
-- [v0.14.0.5](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.5.md) released December/08/2019
-- [v0.14.0.4](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.4.md) released November/22/2019
-- [v0.14.0.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.3.md) released August/15/2019
-- [v0.14.0.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.2.md) released July/4/2019
-- [v0.14.0.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.1.md) released May/31/2019
-- [v0.14.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.14.0.md) released May/22/2019
-- [v0.13.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.3.md) released Apr/04/2019
-- [v0.13.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.2.md) released Mar/15/2019
-- [v0.13.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.1.md) released Feb/9/2019
-- [v0.13.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.13.0.md) released Jan/14/2019
-- [v0.12.3.4](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.4.md) released Dec/14/2018
-- [v0.12.3.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.3.md) released Sep/19/2018
-- [v0.12.3.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.2.md) released Jul/09/2018
-- [v0.12.3.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.3.1.md) released Jul/03/2018
-- [v0.12.2.3](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.2.3.md) released Jan/12/2018
-- [v0.12.2.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.2.2.md) released Dec/17/2017
-- [v0.12.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.2.md) released Nov/08/2017
-- [v0.12.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.1.md) released Feb/06/2017
-- [v0.12.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.12.0.md) released Aug/15/2015
-- [v0.11.2](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.11.2.md) released Mar/04/2015
-- [v0.11.1](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.11.1.md) released Feb/10/2015
-- [v0.11.0](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.11.0.md) released Jan/15/2015
-- [v0.10.x](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.10.0.md) released Sep/25/2014
-- [v0.9.x](https://github.com/LKSCOIN/lkscoin-core/blob/master/doc/release-notes/lks/release-notes-0.9.0.md) released Mar/13/2014
+Thanks to everyone running a node, a masternode, a miner or an explorer for the
+LKSCOIN network.
