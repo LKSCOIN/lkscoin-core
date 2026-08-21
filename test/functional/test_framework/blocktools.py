@@ -20,7 +20,11 @@ from io import BytesIO
 MAX_BLOCK_SIGOPS = 20000
 
 # Genesis block time (regtest)
-TIME_GENESIS_BLOCK = 1417713337
+# LKSCOIN: timestamp of the LKSCOIN regtest/devnet genesis block. Upstream uses
+# Dash's (1417713337); with that value the framework's mocked clock starts years
+# before our genesis and the first generated block is rejected as
+# "time-too-new".
+TIME_GENESIS_BLOCK = 1496594050
 
 def create_block(hashprev, coinbase, ntime=None, *, version=1):
     """Create a block (with regtest difficulty)."""
