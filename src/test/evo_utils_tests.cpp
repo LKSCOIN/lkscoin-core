@@ -28,9 +28,12 @@ void Test(llmq::CQuorumManager& qman)
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeDIP0024InstantSend, qman, nullptr, false, false), false);
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeDIP0024InstantSend, qman, nullptr, true, false), true);
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeDIP0024InstantSend, qman, nullptr, true, true), true);
-    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, false, false), true);
-    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, false, false), true);
-    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, true, false), true);
+    // LKSCOIN: ChainLocks use LLMQ_LKS_10_60, which is gated by
+    // nLKSSmallQuorumHeight and therefore disabled until a coordinated
+    // activation (and always disabled when called with a null block index).
+    // Upstream assumes its ChainLocks quorum type is unconditionally enabled.
+    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, false, false), false);
+    BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypeChainLocks, qman, nullptr, true, false), false);
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypePlatform, qman, nullptr, true, false), Params().IsTestChain());
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypePlatform, qman, nullptr, true, true), Params().IsTestChain());
     BOOST_CHECK_EQUAL(IsQuorumTypeEnabledInternal(consensus_params.llmqTypePlatform, qman, nullptr, true, true), Params().IsTestChain());
