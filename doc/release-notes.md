@@ -32,6 +32,22 @@ dpkg -i LKSCoinCore_5.18.2.1.deb
 systemctl start lksd
 ```
 
+### The first start is slow
+
+18.x splits the old `llmq` database into `llmq/dkgdb`, `llmq/recsigdb` and
+`llmq/isdb`, and converts the `txindex` format. Both migrations run **once**, on
+the first start after the upgrade, and the LLMQ one logs nothing outside the
+`llmq` debug category — so the node looks stuck and the RPC answers
+`error code: -28 / Loading block index...` for a long while. We measured 46
+minutes on a single-CPU VPS; on faster hardware it is a few minutes, and every
+later restart is back to seconds.
+
+**Do not interrupt that first start**: an interrupted migration leaves the
+databases inconsistent and forces a full reindex. Use `-debug=llmq` to watch it
+progress, and `grep 'init message: Done loading' debug.log` to see when the node
+is ready. Masternode operators should read
+[`upgrade-guide-masternodes.md`](upgrade-guide-masternodes.md) before starting.
+
 Then confirm the **running** daemon, not just the installed file — a running
 process keeps executing the old binary image after the file has been replaced,
 and some setups restart `lksd` automatically:
